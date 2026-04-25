@@ -23,7 +23,7 @@ export function Hero() {
       >
         <div className="max-w-3xl xl:max-w-4xl 2xl:max-w-[42rem]">
           <p className="mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-ink-muted sm:mb-6 sm:text-sm 2xl:mb-8 2xl:text-base">
-            Blockchain intelligence agent
+            Regulation intelligence platform
           </p>
           <h1 className="text-balance font-serif text-4xl font-normal leading-[1.12] tracking-tight text-ink sm:text-5xl sm:leading-[1.1] lg:text-6xl xl:text-7xl 2xl:text-8xl 2xl:leading-[1.05]">
             <LoopingBlurTypewriter

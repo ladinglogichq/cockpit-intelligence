@@ -13,10 +13,10 @@ const MOCK_ALERT = {
     "Clause 31(c) imposes data localisation requirements that may conflict with the entity's EU-to-Africa transfer mechanism. Confidence: 0.61 — flagged for human review.",
 };
 
-const MOCK_WALLET = {
+const MOCK_JURISDICTION = {
   label: "Jurisdiction context",
-  addressShort: "KEN-DPA-2019",
-  chain: "Africa · East",
+  code: "KEN-DPA-2019",
+  region: "Africa · East",
   tags: ["Pillar 7", "Domestic data protection", "Localisation requirement"],
 };
 
@@ -139,26 +139,25 @@ export function PlatformPage() {
 
               <article
                 className="flex flex-col border border-ink/15 bg-canvas-subtle/40 p-6 sm:p-8"
-                aria-labelledby="mock-wallet-title"
+                aria-labelledby="mock-jurisdiction-title"
               >
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="rounded-sm bg-ink/10 px-2 py-0.5 text-xs font-medium text-ink">Jurisdiction</span>
-                  <span className="text-xs text-ink-muted">{MOCK_WALLET.chain}</span>
+                  <span className="text-xs text-ink-muted">{MOCK_JURISDICTION.region}</span>
                 </div>
-                <h3 id="mock-wallet-title" className="mt-4 font-display text-xl font-semibold text-ink">
-                  {MOCK_WALLET.label}
+                <h3 id="mock-jurisdiction-title" className="mt-4 font-display text-xl font-semibold text-ink">
+                  {MOCK_JURISDICTION.label}
                 </h3>
-                <p className="mt-2 font-mono text-sm text-ink/90">{MOCK_WALLET.addressShort}</p>
+                <p className="mt-2 font-mono text-sm text-ink/90">{MOCK_JURISDICTION.code}</p>
                 <ul className="mt-4 flex flex-wrap gap-2" aria-label="Tags">
-                  {MOCK_WALLET.tags.map((t) => (
+                  {MOCK_JURISDICTION.tags.map((t) => (
                     <li key={t}>
                       <span className="inline-block border border-ink/15 px-2 py-1 text-xs text-ink-muted">{t}</span>
                     </li>
                   ))}
                 </ul>
                 <p className="mt-6 text-sm leading-relaxed text-ink-muted">
-                  Enrichment and graph views ship in a full deployment; here we show how analysts scan context next to an
-                  alert.
+                  Jurisdiction and pillar mapping views ship in a full deployment; here we show how analysts scan context next to an evidence record.
                 </p>
               </article>
             </div>

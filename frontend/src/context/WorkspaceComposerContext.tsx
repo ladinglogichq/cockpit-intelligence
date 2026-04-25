@@ -22,9 +22,9 @@ export type ComposerAttachment = {
 };
 
 export const COMPOSER_MODE_LABELS: Record<ComposerMode, string> = {
-  investigation: "Investigation",
+  investigation: "Jurisdiction scan",
   research_note: "Research note",
-  compliance_review: "Compliance review",
+  compliance_review: "Clause analysis",
 };
 
 type WorkspaceComposerContextValue = {

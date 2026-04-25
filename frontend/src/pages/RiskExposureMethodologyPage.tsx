@@ -4,86 +4,85 @@ import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
 
 /**
- * Educational overview of how address- and transaction-level risk exposure screening is commonly modeled.
- * Taxonomy and thresholds vary by provider and jurisdiction—verify against your vendor SLA and legal counsel.
+ * Educational overview of how data protection compliance assessments are commonly modeled.
+ * Taxonomy and thresholds vary by jurisdiction and framework—verify against your legal counsel.
  */
 
-const RISK_TAG_ROWS: readonly { tag: string; summary: string }[] = [
+const COMPLIANCE_TAG_ROWS: readonly { tag: string; summary: string }[] = [
   {
-    tag: "Sanctions exposure",
-    summary:
-      "Addresses publicly associated with parties listed on government or multilateral sanctions programs (for example, consolidated blocked-persons lists).",
+    tag: "Cross-border data transfer restriction",
+    summary: "Clauses that impose limitations on transferring personal data outside the jurisdiction without adequate safeguards or authorization.",
   },
   {
-    tag: "Terrorism financing",
-    summary: "Addresses tied to financing of terrorism as described in public designations or enforcement narratives.",
+    tag: "Data localization requirement",
+    summary: "Provisions requiring personal data to be stored and processed within national borders, with exceptions only for specific circumstances.",
   },
   {
-    tag: "Human trafficking",
-    summary: "Addresses linked to proceeds or infrastructure used in human trafficking, per public reporting or law-enforcement attributions.",
+    tag: "Consent obligation",
+    summary: "Clauses requiring explicit, informed, and freely given consent from data subjects before processing personal data.",
   },
   {
-    tag: "Drug trafficking",
-    summary: "Addresses tied to illicit production, movement, or sale of controlled substances where labels reflect public cases or intelligence summaries.",
+    tag: "Data subject rights",
+    summary: "Provisions granting individuals rights to access, correct, delete, or restrict processing of their personal data.",
   },
   {
-    tag: "Exploit / attack infrastructure",
-    summary: "Addresses involved in known exploits, draining schemes, or laundering of stolen protocol funds.",
+    tag: "Breach notification requirement",
+    summary: "Clauses mandating notification to data subjects and regulators within specified timeframes following a data breach.",
   },
   {
-    tag: "Fraud & scams",
-    summary: "Addresses used in deceptive schemes—phishing, advance-fee fraud, romance or investment scams, honeypots, and similar patterns.",
+    tag: "Data retention limit",
+    summary: "Requirements that personal data not be retained longer than necessary for the purpose for which it was collected.",
   },
   {
-    tag: "Ransomware",
-    summary: "Addresses controlled by ransomware operators or used to collect ransom payments.",
+    tag: "Data processing agreement",
+    summary: "Obligations to have written agreements with data processors that meet or exceed data controller responsibilities.",
   },
   {
-    tag: "CSAM-related payments",
-    summary: "Addresses associated with payment rails for child sexual abuse material, where such attribution exists in public or law-enforcement sources.",
+    tag: "Data protection impact assessment",
+    summary: "Requirements to conduct and document DPIAs for high-risk processing activities before they commence.",
   },
   {
-    tag: "Money laundering (suspected)",
-    summary: "Addresses flagged in typologies consistent with layering or integration of illicit proceeds (heuristic or model-based).",
+    tag: "DPO appointment",
+    summary: "Mandates for organizations to appoint a Data Protection Officer when meeting certain thresholds or processing sensitive data.",
   },
   {
-    tag: "Mixing / privacy services",
-    summary: "Addresses belonging to mixers, privacy pools, or other services whose primary effect is to obscure asset trails.",
+    tag: "Data portability",
+    summary: "Rights of data subjects to receive their personal data in a structured, commonly used, machine-readable format.",
   },
   {
-    tag: "Darknet marketplaces",
-    summary: "Addresses operated by or for illicit marketplaces on anonymous networks.",
+    tag: "Special category data",
+    summary: "Additional protections and restrictions for processing sensitive personal data such as health, biometric, or political opinions.",
   },
   {
-    tag: "Other darknet commerce",
-    summary: "Addresses tied to illicit goods or services sold outside mainstream marketplaces (for example, weapons or credential sales), where publicly labeled.",
+    tag: "Third-party disclosure",
+    summary: "Requirements and restrictions on sharing personal data with third parties, including consent and contractual safeguards.",
   },
   {
-    tag: "Issuer- or protocol-level freeze",
-    summary: "Addresses blocked at the token-contract or issuer level (stablecoin freeze lists, etc.).",
+    tag: "Automated decision-making",
+    summary: "Rights and safeguards regarding decisions made solely by automated means, including the right to human intervention.",
   },
   {
-    tag: "Gambling",
-    summary: "Addresses belonging to unlicensed or high-risk gambling operators, where your policy treats them as material.",
+    tag: "International data transfer adequacy",
+    summary: "Provisions related to transfers to countries deemed to have adequate data protection frameworks by the home jurisdiction.",
   },
   {
-    tag: "High-risk VASP / weak KYC",
-    summary: "Addresses associated with virtual-asset service providers that lack adequate customer due diligence under your policy framework.",
+    tag: "Regulatory authority notification",
+    summary: "Requirements to register or notify data protection authorities of certain processing activities or data breaches.",
   },
   {
-    tag: "High-risk jurisdiction (FATF-style lists)",
-    summary: "Entities domiciled in jurisdictions appearing on public FATF “call for action” or “increased monitoring” lists, when your rules map those lists to elevated risk.",
+    tag: "Purpose limitation",
+    summary: "Requirements that personal data be collected for specified, explicit, and legitimate purposes and not further processed incompatibly.",
   },
   {
-    tag: "Increased monitoring jurisdiction (FATF-style lists)",
-    summary: "Entities domiciled in jurisdictions under heightened monitoring in public AML/CFT evaluations, when your policy treats that as a distinct tier.",
+    tag: "Data minimization",
+    summary: "Principles requiring that only data adequate, relevant, and limited to what is necessary for the intended purpose be collected.",
   },
 ];
 
 export function RiskExposureMethodologyPage() {
   useEffect(() => {
     const prev = document.title;
-    document.title = "Risk exposure screening — methodology — Cockpit";
+    document.title = "Compliance assessment methodology — Cockpit";
     return () => {
       document.title = prev;
     };
@@ -103,12 +102,12 @@ export function RiskExposureMethodologyPage() {
           <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink-muted">Methodology</p>
             <h1 className="mt-3 max-w-3xl font-serif text-4xl font-normal tracking-tight text-ink sm:text-5xl">
-              Risk exposure screening
+              Data protection compliance assessment
             </h1>
             <p className="mt-4 max-w-2xl text-lg text-ink-muted">
-              Many compliance stacks score “exposure” by combining <strong className="font-medium text-ink/90">labeled addresses</strong>,{" "}
-              <strong className="font-medium text-ink/90">graph traversals</strong>, and{" "}
-              <strong className="font-medium text-ink/90">policy rules</strong>. The ideas below describe common patterns—not a
+              Many compliance teams assess regulatory exposure by combining <strong className="font-medium text-ink/90">clause extraction</strong>,{" "}
+              <strong className="font-medium text-ink/90">pillar mapping</strong>, and{" "}
+              <strong className="font-medium text-ink/90">evidence verification</strong>. The ideas below describe common patterns—not a
               promise that Cockpit or any third party implements them identically.
             </p>
           </div>
@@ -117,12 +116,12 @@ export function RiskExposureMethodologyPage() {
         <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
           <section aria-labelledby="tags-heading" className="scroll-mt-24">
             <h2 id="tags-heading" className="font-display text-2xl font-semibold tracking-tight text-ink">
-              Risk tags (illustrative)
+              Compliance tags (illustrative)
             </h2>
             <p className="mt-4 text-base leading-relaxed text-ink-muted">
-              Providers maintain taxonomies of <dfn>risk tags</dfn>—short labels attached to addresses, clusters, or entities.
-              Names and definitions differ by vendor; the table is a neutral summary for onboarding and engineering design,
-              not an exhaustive legal taxonomy.
+              Regulators and frameworks maintain taxonomies of <dfn>compliance obligations</dfn>—short labels attached to clauses
+              in legal documents. Names and definitions differ by jurisdiction; the table is a neutral summary for onboarding and
+              engineering design, not an exhaustive legal taxonomy.
             </p>
             <div className="mt-8 overflow-x-auto rounded-lg border border-ink/10">
               <table className="w-full min-w-[32rem] border-collapse text-left text-sm">
@@ -137,7 +136,7 @@ export function RiskExposureMethodologyPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {RISK_TAG_ROWS.map((row) => (
+                  {COMPLIANCE_TAG_ROWS.map((row) => (
                     <tr key={row.tag} className="border-b border-ink/10 last:border-b-0">
                       <th scope="row" className="whitespace-nowrap px-4 py-3 align-top font-medium text-ink">
                         {row.tag}
@@ -152,75 +151,76 @@ export function RiskExposureMethodologyPage() {
 
           <section aria-labelledby="metrics-heading" className="mt-14 border-t border-ink/10 pt-12">
             <h2 id="metrics-heading" className="font-display text-2xl font-semibold tracking-tight text-ink">
-              Exposure amount and exposure share
+              Confidence scoring and coverage metrics
             </h2>
             <dl className="mt-6 space-y-4 text-base leading-relaxed text-ink-muted">
               <div>
-                <dt className="font-medium text-ink">Exposure amount</dt>
+                <dt className="font-medium text-ink">Confidence score</dt>
                 <dd className="mt-1">
-                  The notional value (often in USD) of assets that have touched, passed through, or remain associated with a
-                  labeled risk source within the scope of the rule (for example, inbound flow over N hops).
+                  A numerical score (typically 0–1) representing the likelihood that a clause-to-pillar mapping is correct, based on
+                  semantic similarity, keyword matching, and cross-referencing with established jurisprudence.
                 </dd>
               </div>
               <div>
-                <dt className="font-medium text-ink">Exposure share</dt>
+                <dt className="font-medium text-ink">Coverage percentage</dt>
                 <dd className="mt-1">
-                  That exposure amount expressed as a fraction of relevant flow—such as total inflows or outflows in the
-                  window your policy defines—so analysts can see concentration, not only absolutes.
+                  The proportion of relevant legal documents successfully ingested, parsed, and mapped to pillars within a
+                  jurisdiction or framework, so teams can assess completeness of their regulatory intelligence.
                 </dd>
               </div>
             </dl>
           </section>
 
-          <section aria-labelledby="address-heading" className="mt-14 border-t border-ink/10 pt-12">
-            <h2 id="address-heading" className="font-display text-2xl font-semibold tracking-tight text-ink">
-              Address-level checks (common patterns)
+          <section aria-labelledby="clause-heading" className="mt-14 border-t border-ink/10 pt-12">
+            <h2 id="clause-heading" className="font-display text-2xl font-semibold tracking-tight text-ink">
+              Clause-level analysis (common patterns)
             </h2>
             <ol className="mt-6 list-decimal space-y-8 pl-5 text-base leading-relaxed text-ink-muted marker:text-ink/50">
               <li>
-                <strong className="font-medium text-ink/90">Direct label match</strong> — The screened wallet itself carries
-                one or more risk tags from the provider’s graph (for example, a sanctions designation surfaced on-chain or
-                via the vendor’s entity layer).
+                <strong className="font-medium text-ink/90">Direct pillar match</strong> — The extracted clause carries clear
+                indicators for RDTII Pillar 6 (Cross-Border Data Policies) or Pillar 7 (Domestic Data Protection & Privacy) based on
+                explicit keywords and semantic analysis of the legal text.
               </li>
               <li>
-                <strong className="font-medium text-ink/90">Indirect exposure via fund flow</strong> — The engine walks
-                sends and receives up to a configurable depth. If any counterparty or intermediate hop matches a tag, and
-                amount or direction satisfies your thresholds, the address is flagged according to your rule pack.
+                <strong className="font-medium text-ink/90">Indirect mapping via context</strong> — The engine analyzes
+                surrounding clauses, section headers, and document structure to determine pillar affiliation when the clause
+                itself is ambiguous, with confidence adjusted accordingly.
               </li>
               <li>
-                <strong className="font-medium text-ink/90">Policy denylist</strong> — Your organization maintains a list of
-                addresses that must always fail or always trigger review; the check is a straight interaction test against
-                that list (sometimes combined with direction and minimum value filters).
+                <strong className="font-medium text-ink/90">Cross-jurisdiction comparison</strong> — Your organization maintains
+                reference clauses from well-studied jurisdictions; the check identifies similar provisions across jurisdictions
+                to inform mapping confidence and highlight regulatory convergence or divergence.
               </li>
             </ol>
           </section>
 
-          <section aria-labelledby="tx-heading" className="mt-14 border-t border-ink/10 pt-12">
-            <h2 id="tx-heading" className="font-display text-2xl font-semibold tracking-tight text-ink">
-              Transaction- and transfer-level checks
+          <section aria-labelledby="verification-heading" className="mt-14 border-t border-ink/10 pt-12">
+            <h2 id="verification-heading" className="font-display text-2xl font-semibold tracking-tight text-ink">
+              Citation and evidence verification
             </h2>
             <ol className="mt-6 list-decimal space-y-8 pl-5 text-base leading-relaxed text-ink-muted marker:text-ink/50">
               <li>
-                <strong className="font-medium text-ink/90">Participant screening</strong> — Evaluate the addresses that
-                appear as senders, recipients, or contract parties in the transfer against your tag set and lists.
+                <strong className="font-medium text-ink/90">Source verification</strong> — Validate that each extracted clause
+                matches verbatim with the source document, preserving article numbers, section references, and page numbers for
+                accurate citation.
                 <span className="mt-2 block text-sm text-ink-faint">
-                  When you screen in a <em>deposit</em> vs <em>withdrawal</em> mental model, many products only apply certain
-                  rules to the counterparty that matches your firm’s “customer side” of the rail (implementation-specific).
+                  When working with scanned PDFs, OCR accuracy must be verified against the original to ensure no textual
+                  artifacts have been introduced.
                 </span>
               </li>
               <li>
-                <strong className="font-medium text-ink/90">Flow tracing from the transfer</strong> — Starting from the
-                screened transfer, trace upstream or downstream value movement to see whether it touches tagged
-                infrastructure within configured hops and limits.
+                <strong className="font-medium text-ink/90">Citation formatting</strong> — Generate structured citations that
+                  include document title, publication date, source URL, and specific article reference so evidence can be
+                  independently verified by reviewers and auditors.
               </li>
               <li>
-                <strong className="font-medium text-ink/90">Denylist touch</strong> — Fail or escalate if the transfer
-                directly interacts with an address on your internal denylist, independent of third-party tags.
+                <strong className="font-medium text-ink/90">Human review gates</strong> — Flag low-confidence mappings or
+                ambiguous clauses for mandatory human review, with audit trails recording who verified what and when.
               </li>
             </ol>
             <p className="mt-8 text-sm leading-relaxed text-ink-faint">
-              Deposit/withdrawal semantics, hop counts, and which endpoint is “the customer” are product-specific—configure
-              and test them against your travel-rule and CDD procedures.
+              Citation formats, confidence thresholds, and which clauses require human review are policy-specific—configure
+              and test them against your compliance review procedures and legal counsel requirements.
             </p>
           </section>
 
@@ -229,8 +229,9 @@ export function RiskExposureMethodologyPage() {
               Disclaimer
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-ink-muted">
-              This page is general educational material. It is not legal, sanctions, or compliance advice. List names,
-              tag definitions, and screening outcomes depend on your data vendor, jurisdiction, and internal policies.
+              This page is general educational material. It is not legal advice or a substitute for professional legal
+              counsel. Regulatory interpretations, pillar mappings, and compliance assessments depend on your jurisdiction,
+              specific business context, and internal policies.
             </p>
           </section>
 
@@ -242,7 +243,7 @@ export function RiskExposureMethodologyPage() {
               to="/explore-data"
               className="font-medium text-ink underline decoration-ink/25 underline-offset-4 transition hover:text-ink-muted"
             >
-              Compliance-ready exports
+              Evidence record exports
             </Link>
             <Link
               to="/pricing"

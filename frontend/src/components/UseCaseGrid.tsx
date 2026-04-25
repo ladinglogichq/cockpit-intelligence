@@ -18,26 +18,26 @@ type CaseCard =
 const cases: CaseCard[] = [
   {
     n: "01",
-    title: "Multi-entity investigations",
-    body: "Trace flows across chains and entities with reproducible steps and exportable audit trails.",
+    title: "Jurisdiction discovery",
+    body: "Discover data protection laws, gazette notices, and treaty amendments across jurisdictions with reproducible steps and exportable audit trails.",
     to: "/cases",
   },
   {
     n: "02",
-    title: "Alert enrichment",
-    body: "Enrich raw alerts with context, dismiss noise, or escalate with everything an analyst needs.",
+    title: "Clause extraction",
+    body: "Extract relevant legal clauses from parsed documents, identify article references, and classify clause types for systematic analysis.",
     to: "/alerts",
   },
   {
     n: "03",
-    title: "Defensible reports",
-    body: "Generate structured intelligence summaries aligned to how your team reviews and signs off.",
+    title: "Pillar mapping",
+    body: "Map clauses to RDTII Pillar 6 (Cross-Border Data Policies) and Pillar 7 (Domestic Data Protection & Privacy) with confidence scoring.",
     to: "/reports",
   },
   {
     n: "04",
-    title: "Custom workspaces",
-    body: "Spin up purpose-built tools and dashboards for specialized investigative programs.",
+    title: "Evidence records",
+    body: "Generate defensible evidence bundles with citations, source URLs, and mapping rationales your team can stand behind in review.",
     to: "/dashboard",
   },
 ];

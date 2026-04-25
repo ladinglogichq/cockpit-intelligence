@@ -2,12 +2,12 @@ const principles = [
   {
     n: "01",
     title: "Data quality",
-    body: "Strong models amplify weak data. Cockpit is built to prioritize breadth, depth, and accuracy in what agents retrieve and cite.",
+    body: "Strong models amplify weak data. Cockpit is built to prioritize breadth, depth, and accuracy in what agents retrieve and cite from legal sources.",
   },
   {
     n: "02",
     title: "Context & reasoning",
-    body: "Investigation and compliance expertise is encoded in workflows so agents reach correct conclusions faster.",
+    body: "Regulatory intelligence expertise is encoded in workflows so agents reach correct conclusions faster about data protection obligations.",
   },
   {
     n: "03",
@@ -21,8 +21,8 @@ const principles = [
   },
   {
     n: "05",
-    title: "Ground truth & clustering",
-    body: "Conservative attribution where evidence supports it. Clustering from verified seeds stays deterministic, rebuildable, and ready for peer review.",
+    title: "Verbatim evidence",
+    body: "Conservative attribution where source text supports it. Clause excerpts are verbatim from original documents, rebuildable and ready for peer review.",
   },
   {
     n: "06",
@@ -32,12 +32,12 @@ const principles = [
   {
     n: "07",
     title: "Multi-agent operations",
-    body: "Orchestrate monitors, analyzers, and escalation paths so leads surface to humans with full context.",
+    body: "Orchestrate discovery, extraction, and mapping workflows so evidence surfaces to humans with full context and rationale.",
   },
   {
     n: "08",
     title: "Evidence you can defend",
-    body: "Exports bundle citations, chain references, and human checkpoints so reviews, audits, and counsel see the same story the agent saw.",
+    body: "Exports bundle citations, source URLs, article references, and human checkpoints so reviews, audits, and counsel see the same story the agent saw.",
   },
 ];
 

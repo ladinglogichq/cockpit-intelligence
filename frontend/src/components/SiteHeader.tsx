@@ -474,7 +474,7 @@ export function SiteHeader() {
                   hello@cockpit.io
                 </a>
                 <p className="text-sm leading-relaxed text-ink-faint">
-                  © {new Date().getFullYear()} Cockpit. Blockchain intelligence for teams that need
+                  © {new Date().getFullYear()} Cockpit. Regulation intelligence for teams that need
                   defensible outcomes.
                 </p>
               </div>

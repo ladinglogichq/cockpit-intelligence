@@ -4,10 +4,10 @@ export function ModuleText() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="max-w-2xl">
           <h2 className="font-serif text-3xl font-normal tracking-tight text-ink sm:text-4xl">
-            Built for investigations, not guesses
+            Built for evidence, not assumptions
           </h2>
           <p className="mt-6 text-lg leading-relaxed text-ink-muted">
-            On-chain data, structured attributions, auditable clustering so agents inherit your graph.
+            Legal sources, clause extraction, pillar mapping so agents work from primary documents, not summaries.
           </p>
           <div className="mt-8">
             <a

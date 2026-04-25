@@ -27,8 +27,7 @@ export function SiteFooter() {
               </span>
             </a>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-ink-muted">
-              A harness for blockchain intelligence agents built for investigations, compliance, and evidence that holds
-              up in review.
+              A regulation intelligence platform for discovering, mapping, and verifying data protection obligations with evidence you can defend.
             </p>
             <p className="mt-3 text-xs font-medium tracking-wide text-ink-faint">
               By Daemon Blockint Technologies
