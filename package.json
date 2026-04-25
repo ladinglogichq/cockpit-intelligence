@@ -1,0 +1,14 @@
+{
+  "name": "cockpit",
+  "private": true,
+  "description": "Cockpit — frontend + agents package; see README.md",
+  "scripts": {
+    "dev": "npm run dev --prefix frontend",
+    "dev:api": "npm run dev --prefix services/api",
+    "build": "npm run build --prefix frontend",
+    "preview": "npm run preview --prefix frontend",
+    "typecheck:agents": "npm run typecheck --prefix services/agents",
+    "typecheck:api": "npm run typecheck --prefix services/api",
+    "task-packet:dry-run": "npm run task-packet:dry-run --prefix services/agents"
+  }
+}

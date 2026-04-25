@@ -1,0 +1,88 @@
+{
+  "generatedAt": "2026-04-25T12:00:00.000Z",
+  "kpis": {
+    "jurisdictionsAnalyzed": 4,
+    "clausesExtracted": 47,
+    "mappingsVerified": 31,
+    "reportsReady": 2
+  },
+  "evidence": [
+    {
+      "id": "ev-1001",
+      "jurisdiction": "Singapore",
+      "statute": "Personal Data Protection Act 2012 (PDPA)",
+      "articleSection": "Section 26",
+      "pillar": "pillar_7",
+      "confidence": 0.94,
+      "status": "verified",
+      "excerpt": "An organisation shall not transfer any personal data to a country or territory outside Singapore except in accordance with requirements prescribed under this Act.",
+      "rationale": "Imposes restrictions on cross-border personal data transfers, requiring compliance with prescribed safeguards before data leaves Singapore.",
+      "sourceUrl": "https://sso.agc.gov.sg/Act/PDPA2012",
+      "extractedAt": "2026-04-24T14:22:00.000Z"
+    },
+    {
+      "id": "ev-1002",
+      "jurisdiction": "Kenya",
+      "statute": "Data Protection Act 2019",
+      "articleSection": "Section 48",
+      "pillar": "pillar_6",
+      "confidence": 0.91,
+      "status": "verified",
+      "excerpt": "A data controller or data processor shall not transfer personal data to another country unless that country or territory has commensurate data protection safeguards or the transfer is necessary for the performance of a contract.",
+      "rationale": "Establishes cross-border data transfer conditions requiring adequacy or contractual necessity, directly mapping to Pillar 6 cross-border data policies.",
+      "sourceUrl": "http://kenyalaw.org/kl/fileadmin/pdfdownloads/Acts/2019/TheDataProtectionAct__No24of2019.pdf",
+      "extractedAt": "2026-04-24T15:08:00.000Z"
+    },
+    {
+      "id": "ev-1003",
+      "jurisdiction": "Nigeria",
+      "statute": "Nigeria Data Protection Act 2023 (NDPA)",
+      "articleSection": "Section 43(1)",
+      "pillar": "pillar_6",
+      "confidence": 0.88,
+      "status": "verified",
+      "excerpt": "A data controller shall not transfer personal data to a foreign country unless the Commission has determined that the foreign country ensures an adequate level of protection of personal data.",
+      "rationale": "Requires adequacy determination by the Nigeria Data Protection Commission before cross-border transfers, a core Pillar 6 restriction.",
+      "sourceUrl": "https://ndpc.gov.ng/Files/Nigeria_Data_Protection_Act_2023.pdf",
+      "extractedAt": "2026-04-24T16:45:00.000Z"
+    },
+    {
+      "id": "ev-1004",
+      "jurisdiction": "Singapore",
+      "statute": "Personal Data Protection Act 2012 (PDPA)",
+      "articleSection": "Section 24",
+      "pillar": "pillar_7",
+      "confidence": 0.92,
+      "status": "verified",
+      "excerpt": "An organisation shall make, on or before collecting personal data, a reasonable effort to ensure that the individual is aware of the purposes for the collection, use or disclosure of the personal data.",
+      "rationale": "Establishes consent and notification obligations for personal data collection, a core Pillar 7 domestic data protection requirement.",
+      "sourceUrl": "https://sso.agc.gov.sg/Act/PDPA2012",
+      "extractedAt": "2026-04-24T14:35:00.000Z"
+    },
+    {
+      "id": "ev-1005",
+      "jurisdiction": "Kenya",
+      "statute": "Data Protection Act 2019",
+      "articleSection": "Section 30",
+      "pillar": "pillar_7",
+      "confidence": 0.86,
+      "status": "needs_review",
+      "excerpt": "A data controller or data processor shall ensure that personal data is not kept for longer than is necessary for the purpose for which it was collected.",
+      "rationale": "Imposes data retention limits, mapping to Pillar 7 domestic data protection. Flagged for review due to broad scope language.",
+      "sourceUrl": "http://kenyalaw.org/kl/fileadmin/pdfdownloads/Acts/2019/TheDataProtectionAct__No24of2019.pdf",
+      "extractedAt": "2026-04-24T15:22:00.000Z"
+    }
+  ],
+  "mappingActivity": [
+    {
+      "jurisdiction": "Nigeria",
+      "detail": "3 new Pillar 6 clauses extracted from NDPA 2023",
+      "occurredAt": "2026-04-24T16:50:00.000Z"
+    },
+    {
+      "jurisdiction": "Singapore",
+      "detail": "Section 26 PDPA verified — cross-border transfer restriction confirmed",
+      "occurredAt": "2026-04-24T14:30:00.000Z"
+    }
+  ]
+}

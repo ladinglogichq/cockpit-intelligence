@@ -1,0 +1,13 @@
+{
+  "goal": "Extract and map data protection clauses from Kenya Data Protection Act 2019 to RDTII Pillar 6 and Pillar 7",
+  "why": "Smoke-test task-packet parsing, context loading, and regulation intelligence pipeline without calling the LLM",
+  "taskType": "extraction",
+  "jurisdiction": "KE",
+  "targetPillars": ["pillar_6", "pillar_7"],
+  "allowedScope": ["services/agents/src/tools/stubTools.ts"],
+  "mustLoadContext": ["domain.rdtii-pillars"],
+  "mustCheckSymbols": ["clauseExtractor", "pillarMapper"],
+  "constraints": ["no client-side secrets", "preserve citation provenance"],
+  "deliverable": ["dry-run CLI passes", "clause extraction stubs invoked correctly"],
+  "doneCriteria": ["npm run task-packet:dry-run succeeds"]
+}
