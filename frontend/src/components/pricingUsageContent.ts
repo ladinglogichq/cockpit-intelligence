@@ -13,7 +13,7 @@ export const PRICING_USAGE_ITEMS = [
   {
     title: "Chains & data sources",
     body:
-      "Core bundles include high-throughput Solana and EVM coverage via partner RPC and indexed datasets. Enterprise adds custom indexers and private feeds where contractually available.",
+      "Core bundles include multi-source document retrieval from official gazettes, regulator websites, and legal portals. Enterprise adds custom crawlers and proprietary feeds where contractually available.",
   },
   {
     title: "Compliance & audit",

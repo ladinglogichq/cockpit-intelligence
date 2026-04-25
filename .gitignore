@@ -1,0 +1,44 @@
+# dependencies
+node_modules/
+**/node_modules/
+.pnp
+.pnp.js
+.yarn/install-state.gz
+.yarn/cache
+
+# build outputs
+dist/
+**/dist/
+build/
+**/build/
+out/
+.next/
+*.tsbuildinfo
+
+# env files
+.env
+.env.*
+!.env.example
+*.local
+
+# misc
+.DS_Store
+*.pem
+.idea
+.vercel
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# coverage
+coverage/
+
+# LangGraph
+.langgraph_api
+
+# claude / agent OS
+**/.claude/settings.local.json
+.claude
+agent-os
+sandbox-workspace/
+workspace/

@@ -2,10 +2,10 @@ import { useEffect, useId } from "react";
 import { useWorkspaceComposer } from "../context/WorkspaceComposerContext";
 
 const SUGGESTIONS = [
-  "Trace funds from this Solana address",
-  "Summarize open alerts for custodial clusters",
-  "What cases are blocked on review?",
-  "Compare entity risk for two wallets",
+  "Summarize data protection clauses for Kenya DPA",
+  "Which jurisdictions have cross-border transfer restrictions?",
+  "What evidence records need human review?",
+  "Compare Pillar 7 coverage across Singapore and Nigeria",
 ] as const;
 
 export function DashboardPage() {

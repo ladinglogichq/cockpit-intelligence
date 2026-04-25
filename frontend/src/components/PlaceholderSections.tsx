@@ -10,16 +10,16 @@ const BLOG_TEASERS: readonly {
   cta?: string;
 }[] = [
   {
-    title: "OSINT beyond the chain: Bellingcat’s investigation toolkit",
+    title: "Reading regulation intelligence: how agents extract and map legal text",
     excerpt:
-      "A public directory of open-source tools (maps, imagery, archives, and more) to pair with chain tracing. We link to the official GitBook and GitHub; we don’t mirror the catalog here.",
+      "A walkthrough of the evidence pipeline—document discovery, clause extraction, pillar mapping, and citation verification—and how each stage feeds the next.",
     to: "/blog",
     cta: "Read",
   },
   {
-    title: "Tracing fund flows with blockchain intelligence agents",
+    title: "Mapping data protection obligations across jurisdictions",
     excerpt:
-      "How analysts combine graph steps, retrieval, and screening in one auditable workflow without losing chain of custody.",
+      "How analysts combine jurisdiction discovery, clause extraction, and pillar mapping in one auditable workflow without losing evidence provenance.",
   },
   {
     title: "Compliance-ready exports and review checkpoints",
@@ -31,7 +31,7 @@ const BLOG_TEASERS: readonly {
   {
     title: "Release notes & methodology",
     excerpt:
-      "Product updates, data-source notes, and how we think about coverage across Solana, EVM, and partner feeds.",
+      "Product updates, data-source notes, and how we think about jurisdiction coverage across Africa, Asia-Pacific, and emerging regulatory frameworks.",
   },
 ];
 

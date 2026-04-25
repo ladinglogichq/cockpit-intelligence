@@ -26,8 +26,8 @@ const principles = [
   },
   {
     n: "06",
-    title: "OSINT & time windows",
-    body: "Pair chain intelligence with organized open-source context and precise time-bounded transaction review.",
+    title: "Multi-source retrieval",
+    body: "Pair gazette retrieval, PDF extraction, and translation so agents work from primary sources, not summaries of summaries.",
   },
   {
     n: "07",

@@ -13,8 +13,8 @@ export function EntitiesPage() {
   return (
     <WorkspacePageBody
       title="Entities"
-      intro="Normalized intelligence objects—wallets, token mints, programs, domains, and related kinds—with provenance from artifacts and edges backed by evidence."
-      panelCaption="Reserved for entity search, graph hints, and enrichment panels (Solana and cross-chain as configured)."
+      intro="Normalized regulation objects—jurisdictions, legal documents, clauses, and pillar mappings—with provenance from evidence records backed by retrievable citations."
+      panelCaption="Reserved for jurisdiction search, clause graph hints, and enrichment panels (cross-border and domestic data protection as configured)."
     />
   );
 }

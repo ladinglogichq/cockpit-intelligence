@@ -28,7 +28,7 @@ const TIERS: TierDef[] = [
     features: [
       "1 seat",
       "2k agent tool calls / month",
-      "Solana + EVM via standard RPC",
+      "5 jurisdiction bundles via standard retrieval",
       "Tracer: 1 active canvas",
       "Community support",
     ],
@@ -42,7 +42,7 @@ const TIERS: TierDef[] = [
     features: [
       "1 seat",
       "25k agent tool calls / month",
-      "Core chains (Solana, EVM)",
+      "Core jurisdictions (Africa, Asia-Pacific)",
       "Tracer: 3 active canvases",
       "Email support",
     ],

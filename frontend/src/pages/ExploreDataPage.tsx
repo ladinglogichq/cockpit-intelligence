@@ -114,7 +114,7 @@ export function ExploreDataPage() {
               to="/blog"
               className="font-medium text-ink underline decoration-ink/25 underline-offset-4 transition hover:text-ink-muted"
             >
-              OSINT &amp; Bellingcat toolkit
+              Evidence pipeline walkthrough
             </Link>
             <Link
               to="/pricing"

@@ -11,7 +11,7 @@ export type DashboardKpis = {
   reportsReady: number;
 };
 
-export type EvidenceRow = {
+export type EvidenceRecord = {
   id: string;
   jurisdiction: string;
   statute: string;
@@ -34,7 +34,7 @@ export type MappingActivityRow = {
 export type DashboardSnapshot = {
   generatedAt: string;
   kpis: DashboardKpis;
-  evidence: EvidenceRow[];
+  evidence: EvidenceRecord[];
   mappingActivity: MappingActivityRow[];
 };
 

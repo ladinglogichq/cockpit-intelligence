@@ -5,33 +5,33 @@ import { SiteHeader } from "../components/SiteHeader";
 import { ArrowRight } from "../components/icons";
 
 const MOCK_ALERT = {
-  id: "ALT-2048",
-  title: "High-velocity cluster (Solana)",
+  id: "EVD-2048",
+  title: "Cross-border transfer clause flagged (Kenya DPA)",
   severity: "high" as const,
-  status: "triaged" as const,
+  status: "needs_review" as const,
   summary:
-    "Multiple wallets funded from the same bridge hop within a 12-minute window; enrichment suggests shared counterparty risk.",
+    "Clause 31(c) imposes data localisation requirements that may conflict with the entity's EU-to-Africa transfer mechanism. Confidence: 0.61 — flagged for human review.",
 };
 
 const MOCK_WALLET = {
-  label: "Counterparty wallet",
-  addressShort: "DYw8…9qRm",
-  chain: "Solana",
-  tags: ["CEX deposit pattern", "Bridge-adjacent"],
+  label: "Jurisdiction context",
+  addressShort: "KEN-DPA-2019",
+  chain: "Africa · East",
+  tags: ["Pillar 7", "Domestic data protection", "Localisation requirement"],
 };
 
 const PILLARS = [
   {
-    title: "Monitor",
-    body: "Surface OSINT-style signals and on-chain movement in one triage queue, tuned for noisy, high-volume environments.",
+    title: "Discover",
+    body: "Surface data protection laws, gazette notices, and treaty amendments across jurisdictions in one retrieval queue, tuned for multi-language, high-volume regulatory environments.",
   },
   {
-    title: "Investigate",
-    body: "Trace flows and enrich Solana-native context so analysts can move from alert to evidence without losing the thread.",
+    title: "Extract & Map",
+    body: "Parse legal documents down to clause level, map each clause to RDTII Pillar 6 or 7 sub-indicators, and score confidence so analysts know what needs review.",
   },
   {
-    title: "Act",
-    body: "Escalate to cases, attach rationale, and export defensible summaries your team can stand behind.",
+    title: "Verify & Report",
+    body: "Verify citations against source documents, attach human review gates for low-confidence mappings, and export defensible evidence bundles your team can stand behind.",
   },
 ] as const;
 
@@ -39,7 +39,7 @@ export function PlatformPage() {
   useEffect(() => {
     const prevTitle = document.title;
     const desc =
-      "Preview Cockpit for Solana threat operations: triage-style alerts, case context, and analyst workflows. Illustrative UI only.";
+      "Preview Cockpit for regulation intelligence: evidence records, pillar mappings, and analyst review workflows. Illustrative UI only.";
     document.title = "Platform | Cockpit";
 
     const metaDesc = document.querySelector('meta[name="description"]');
@@ -76,11 +76,11 @@ export function PlatformPage() {
           <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6 sm:py-16">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink-muted">Platform preview</p>
             <h1 className="mt-3 max-w-3xl font-serif text-4xl font-normal tracking-tight text-ink sm:text-5xl">
-              Threat operations on Solana, before they hit your backlog
+              Regulation intelligence, before it falls through the cracks
             </h1>
             <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-muted">
-              Cockpit blends open-source style signals with Solana-native enrichment so your team can monitor, investigate,
-              and close cases with evidence you can defend. Below is a{" "}
+              Cockpit blends multi-source document retrieval with LLM-based clause extraction so your team can discover, map,
+              and verify data protection obligations with evidence you can defend. Below is a{" "}
               <strong className="font-medium text-ink/90">read-only preview</strong>: no live data or integrations in this
               marketing build.
             </p>
@@ -105,8 +105,8 @@ export function PlatformPage() {
 
         <section className="py-14 sm:py-16" aria-labelledby="mock-ui-heading">
           <div className="mx-auto max-w-6xl px-4 sm:px-6">
-            <h2 id="mock-ui-heading" className="font-serif text-2xl font-normal tracking-tight text-ink sm:text-3xl">
-              Preview: alert and wallet context
+            <             h2 id="mock-ui-heading" className="font-serif text-2xl font-normal tracking-tight text-ink sm:text-3xl">
+              Preview: evidence record and jurisdiction context
             </h2>
             <p className="mt-3 max-w-2xl text-sm text-ink-muted">
               Illustrative panels only (copy and structure). Connect your stack when you move past the marketing site.
@@ -118,7 +118,7 @@ export function PlatformPage() {
                 aria-labelledby="mock-alert-title"
               >
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="rounded-sm bg-ink/10 px-2 py-0.5 text-xs font-medium text-ink">Alert</span>
+                  <span className="rounded-sm bg-ink/10 px-2 py-0.5 text-xs font-medium text-ink">Evidence</span>
                   <span className="text-xs text-ink-muted">{MOCK_ALERT.id}</span>
                 </div>
                 <h3 id="mock-alert-title" className="mt-4 font-display text-xl font-semibold text-ink">
@@ -126,7 +126,7 @@ export function PlatformPage() {
                 </h3>
                 <dl className="mt-4 grid grid-cols-2 gap-3 text-sm">
                   <div>
-                    <dt className="text-ink-muted">Severity</dt>
+                    <dt className="text-ink-muted">Confidence</dt>
                     <dd className="font-medium capitalize text-ink">{MOCK_ALERT.severity}</dd>
                   </div>
                   <div>
@@ -142,7 +142,7 @@ export function PlatformPage() {
                 aria-labelledby="mock-wallet-title"
               >
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="rounded-sm bg-ink/10 px-2 py-0.5 text-xs font-medium text-ink">Wallet intel</span>
+                  <span className="rounded-sm bg-ink/10 px-2 py-0.5 text-xs font-medium text-ink">Jurisdiction</span>
                   <span className="text-xs text-ink-muted">{MOCK_WALLET.chain}</span>
                 </div>
                 <h3 id="mock-wallet-title" className="mt-4 font-display text-xl font-semibold text-ink">
