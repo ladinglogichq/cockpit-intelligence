@@ -48,7 +48,7 @@ export function ExploreDataPage() {
             </h2>
             <p className="mt-4 text-base leading-relaxed text-ink-muted">
               Every export has an implicit <strong className="font-medium text-ink/90">grain</strong>: one row per
-              transfer, per day, per alert, per address snapshot, and so on. If the grain is wrong, every downstream
+              evidence record, per jurisdiction, per clause mapping, and so on. If the grain is wrong, every downstream
               table, chart, and narrative is wrong. Before you attach citations or send a package upstream, state the
               grain in one sentence and check that every row obeys it.
             </p>
@@ -64,12 +64,12 @@ export function ExploreDataPage() {
             </p>
             <ul className="mt-6 list-disc space-y-3 pl-5 text-base leading-relaxed text-ink-muted marker:text-ink/40">
               <li>
-                <strong className="font-medium text-ink/90">Coverage</strong> — time range (min/max dates), chain or
-                asset scope, and whether anything was filtered out after retrieval.
+                <strong className="font-medium text-ink/90">Coverage</strong> — time range (min/max dates), jurisdiction
+                or document scope, and whether anything was filtered out after retrieval.
               </li>
               <li>
                 <strong className="font-medium text-ink/90">Completeness</strong> — null rates on key fields; fields
-                that should be unique (e.g. transaction id) should not have duplicates unless the grain allows it.
+                that should be unique (e.g. clause id) should not have duplicates unless the grain allows it.
               </li>
               <li>
                 <strong className="font-medium text-ink/90">Cardinality</strong> — categorical columns with
@@ -77,7 +77,7 @@ export function ExploreDataPage() {
               </li>
               <li>
                 <strong className="font-medium text-ink/90">Cross-checks</strong> — totals and subtotals reconcile;
-                screening flags line up with the underlying transfers you cite.
+                pillar mapping flags line up with the underlying clauses you cite.
               </li>
             </ul>
           </section>
@@ -87,8 +87,8 @@ export function ExploreDataPage() {
               Citations, human gates, and logs
             </h2>
             <p className="mt-4 text-base leading-relaxed text-ink-muted">
-              A defensible package ties each conclusion to retrievable evidence: explorer links, transaction
-              identifiers, and timestamps that a third party can reproduce. Where policy requires it, insert explicit
+              A defensible package ties each conclusion to retrievable evidence: source URLs, document titles, article
+              references, and timestamps that a third party can reproduce. Where policy requires it, insert explicit
               human review steps—who looked at what, when, and what changed—so the export is not only accurate but{' '}
               <em>auditable</em>. System logs (ingestion, agent tool calls, export generation) are part of the story,
               not an afterthought.

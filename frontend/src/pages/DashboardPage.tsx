@@ -30,7 +30,7 @@ export function DashboardPage() {
           What do you want to investigate?
         </h1>
         <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-ink-muted dark:text-zinc-400">
-          Natural-language entry for traces, alerts, and cases. Connectors and agents ship progressively.
+          Natural-language entry for jurisdiction scans, clause analysis, and evidence records. Agents and retrieval connectors ship progressively.
         </p>
       </div>
 

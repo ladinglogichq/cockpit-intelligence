@@ -22,14 +22,14 @@ const TIERS: TierDef[] = [
   {
     name: "Free",
     monthly: 0,
-    blurb: "Try agents and Tracer on a small monthly envelope.",
+    blurb: "Try agents and evidence retrieval on a small monthly envelope.",
     cta: "Start free",
     highlighted: false,
     features: [
       "1 seat",
       "2k agent tool calls / month",
       "5 jurisdiction bundles via standard retrieval",
-      "Tracer: 1 active canvas",
+      "Workspace: 1 active canvas",
       "Community support",
     ],
   },
@@ -43,22 +43,22 @@ const TIERS: TierDef[] = [
       "1 seat",
       "25k agent tool calls / month",
       "Core jurisdictions (Africa, Asia-Pacific)",
-      "Tracer: 3 active canvases",
+      "Workspace: 3 active canvases",
       "Email support",
     ],
   },
   {
     name: "Team",
     monthly: 349,
-    blurb: "Investigation pods with shared evidence trails.",
+    blurb: "Compliance pods with shared evidence trails.",
     cta: "Get started",
     highlighted: true,
     features: [
       "Up to 5 seats",
       "150k agent tool calls / month",
-      "Multi-chain + priority RPC lane",
-      "Tracer: unlimited canvases",
-      "Risk / sanctions bundle (fair use)",
+      "Multi-jurisdiction + priority retrieval lane",
+      "Workspace: unlimited canvases",
+      "Pillar mapping bundle (fair use)",
       "Shared workspace & export audit logs",
     ],
   },
@@ -73,7 +73,7 @@ const TIERS: TierDef[] = [
       "Custom agent & usage envelopes",
       "Dedicated support & review windows",
       "VPC / data residency (where available)",
-      "Custom integrations & DPAs",
+      "Custom integrations & regulatory adapters",
     ],
   },
 ];
@@ -142,7 +142,7 @@ export function PricingPage() {
           <div className="mx-auto max-w-2xl px-4 pb-12 pt-14 text-center sm:px-6 sm:pb-16 sm:pt-20">
             <p className="text-xs font-semibold uppercase tracking-[0.22em] text-ink-muted">Pricing</p>
             <h1 className="mt-4 font-serif text-[2rem] font-normal leading-[1.15] tracking-tight text-ink sm:text-5xl sm:leading-[1.1]">
-              Plans for on-chain intelligence
+              Plans for regulation intelligence
             </h1>
             <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-ink-muted sm:text-lg">
               Start free, then scale with usage-based envelopes. USD list prices; annual prepay saves versus monthly billing.

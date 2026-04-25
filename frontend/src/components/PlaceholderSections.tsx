@@ -52,8 +52,8 @@ export function PlaceholderSections() {
             Ecosystem
           </h2>
           <p className="mt-4 max-w-2xl text-lg text-ink-muted">
-            Integrations and data sources span chains, indexers, compliance APIs, and reference datasets, with deployment
-            patterns documented as we ship them.
+            Data sources include official gazettes, regulator websites, and legal portals. Integration patterns and deployment
+            notes are documented as we ship them.
           </p>
           <EcosystemLogoLoop />
         </div>
@@ -72,8 +72,8 @@ export function PlaceholderSections() {
               Blog
             </h2>
             <p className="mt-4 text-lg leading-relaxed text-ink-muted">
-              Practical notes on blockchain intelligence methodology, product releases, and how teams run investigations
-              with agents, from tracing flows to compliance-ready exports.
+              Practical notes on regulation intelligence methodology, product releases, and how teams build evidence
+              trails from document discovery to compliance-ready exports.
             </p>
           </header>
 

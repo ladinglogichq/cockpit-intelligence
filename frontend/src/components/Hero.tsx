@@ -4,10 +4,10 @@ import { ArrowRight } from "./icons";
 import { LoopingBlurTypewriter } from "./TextType";
 
 const HERO_HEADLINE_PHRASES = [
-  "The analyst-grade agent harness",
-  "Trace flows with evidence you can defend",
-  "Deterministic rules, accountable humans",
-  "Grounded data for serious investigations",
+  "Evidence-first intelligence",
+  "Citations that verify",
+  "Mappable obligations",
+  "Auditable workflows",
 ] as const;
 
 /** Hero sized for full-viewport presentation (e.g. 1920×1080 minus 64px header). */
@@ -36,7 +36,7 @@ export function Hero() {
             />
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-muted sm:mt-8 sm:text-xl lg:text-2xl lg:leading-relaxed 2xl:mt-10 2xl:max-w-3xl 2xl:text-[1.375rem]">
-            Built for investigations that must survive scrutiny.
+            Clause extraction, pillar mapping, and citations from primary legal sources.
           </p>
           <nav
             className="mt-10 flex flex-wrap items-center gap-4 sm:mt-12 sm:gap-5 2xl:mt-14 2xl:gap-6"
