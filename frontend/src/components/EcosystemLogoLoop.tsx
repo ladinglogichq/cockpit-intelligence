@@ -10,14 +10,9 @@ const LOGOS: readonly {
   /** Wide marks read tiny at default height — give them more body. */
   size?: "default" | "lg" | "xl";
 }[] = [
-  /** White wordmark — invert to read on `bg-canvas`. */
-  { src: "/logo-white-no-globe.svg", label: "Cockpit", imgClass: "brightness-0" },
   { src: "/Sim_Logo_Rectangle/Sim_Logo_Black_White.svg", label: "Sim", size: "xl" },
-  { src: encodeURI("/Logo Horizontal (Light).png"), label: "Partner", size: "lg" },
+  // { src: encodeURI("/Logo Horizontal (Light).png"), label: "Partner", size: "lg" },
   { src: "/Bellingcat/Bellingcat_idvCvXN9GZ_1.svg", label: "Bellingcat", size: "lg" },
-  { src: "/rpc-fast-black-logo.svg", label: "RPC Fast" },
-  { src: "/Helius-Horizontal-Logo-Black.svg", label: "Helius" },
-  { src: "/payai-logo.svg", label: "PayAI", size: "lg" },
 ];
 
 function logoSizeClass(size: "default" | "lg" | "xl" | undefined): string {

@@ -7,9 +7,7 @@ import { GetStartedTrigger } from "./GetStartedTrigger";
 /** Learn dropdown — Documentation lives here to keep the desktop bar from overflowing mid-width viewports. */
 const learnLinks = [
   { label: "Documentation", to: { pathname: "/", hash: "docs" } as const },
-  { label: "Learn BlockInt", href: "#learn-blockint" as const },
   { label: "Blog", href: "/blog" as const },
-  { label: "Glossarium", href: "#glossarium" as const },
 ] as const;
 
 /** In-app routes (no hash) — use React Router to avoid full reloads. */
@@ -18,10 +16,8 @@ function isSpaInternalPath(href: string) {
 }
 
 const productItems = [
-  { id: "daemonprotocol", label: "daemonprotocol", href: "https://daemonprotocol.com" as const },
-  { id: "ares", label: "ares", href: "https://aressystem.dev" as const },
-  { id: "obscura", label: "Obscura", href: "https://obscura-app.com" as const },
-  { id: "khonsu", label: "Khonsu IDE", comingSoon: true as const },
+  { id: "sim", label: "Sim", href: "https://sim.io" as const },
+  { id: "bellingcat", label: "Bellingcat", href: "https://bellingcat.com" as const },
 ] as const;
 
 type DesktopNavItem = { label: string; to: string } | { label: string; href: string };
@@ -30,7 +26,6 @@ type DesktopNavItem = { label: string; to: string } | { label: string; href: str
 const marketingNav: DesktopNavItem[] = [
   { label: "Platform", to: "/platform" },
   { label: "Pricing", to: "/pricing" },
-  { label: "Use cases", href: "#use-cases" },
 ];
 
 function ChevronDown({ open }: { open: boolean }) {
@@ -52,7 +47,6 @@ function ChevronDown({ open }: { open: boolean }) {
 
 /** Mobile: large section links (existing pattern). */
 const mobileNav = [
-  { label: "Ecosystem", href: "#ecosystem" },
   { label: "Contact", href: "mailto:hello@cockpit.io" },
   { label: "Get started", href: "#get-started" },
 ];
@@ -387,15 +381,6 @@ export function SiteHeader() {
                   >
                     Pricing
                   </Link>
-                </li>
-                <li className="mobile-nav-item border-b border-ink/10">
-                  <a
-                    href="#use-cases"
-                    className="mobile-nav-link flex min-h-[72px] items-center py-4 font-display text-2xl font-medium text-ink sm:text-[1.75rem]"
-                    onClick={close}
-                  >
-                    Use cases
-                  </a>
                 </li>
 
                 <li className="border-b border-ink/10 py-3">
