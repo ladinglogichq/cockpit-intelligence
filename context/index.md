@@ -18,6 +18,7 @@ Single map of the **checked-in context layer**: what each file is for, **source 
 | Task shape (goal, taskType, mustLoadContext, …) | [templates/task-packet.md](./templates/task-packet.md) — schema: [`services/agents`](../services/agents/README.md) `TaskPacketSchema` |
 | Canonical domain types (Jurisdiction, LegalDocument, Clause, PillarMapping, EvidenceRecord, AuditTrace) | [domain/entities.md](./domain/entities.md) |
 | RDTII Pillar 6 & 7 definitions and sub-indicators | [domain/rdtii-pillars.md](./domain/rdtii-pillars.md) |
+| External data sources by pipeline stage and pillar | [domain/data-sources.md](./domain/data-sources.md) |
 | Evidence pipeline stages (discover → verify → report) | [domain/evidence-pipeline.md](./domain/evidence-pipeline.md) |
 | Roles, permissions, audit expectations | [domain/rbac-audit.md](./domain/rbac-audit.md) |
 | Adapters, env patterns, failure policy | [domain/integrations.md](./domain/integrations.md) |
@@ -74,6 +75,7 @@ For implementation work, add [templates/agent-coder-task.md](./templates/agent-c
 | ---- | ----------- |
 | [domain/entities.md](./domain/entities.md) | Any change touching Jurisdiction, LegalDocument, Clause, PillarMapping, EvidenceRecord, AuditTrace |
 | [domain/rdtii-pillars.md](./domain/rdtii-pillars.md) | Pillar definitions, sub-indicator mapping criteria, confidence thresholds |
+| [domain/data-sources.md](./domain/data-sources.md) | External data sources by pipeline stage and RDTII pillar; integration priority and access notes |
 | [domain/evidence-pipeline.md](./domain/evidence-pipeline.md) | Pipeline stage definitions, agent handoff points |
 | [domain/rbac-audit.md](./domain/rbac-audit.md) | Roles, matrix, sensitive actions |
 | [domain/integrations.md](./domain/integrations.md) | Adapters, secrets, retries, checklist |

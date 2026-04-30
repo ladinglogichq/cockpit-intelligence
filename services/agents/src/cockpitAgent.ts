@@ -11,6 +11,7 @@ import {
   citationVerifier,
 } from "./tools/realTools.js";
 import { pasalSearch, pasalFetch } from "./tools/pasalTools.js";
+import { digitalPolicySearch } from "./tools/digitalPolicyTools.js";
 
 export const DEFAULT_MODEL = "claude-sonnet-4-5-20250514" as const;
 
@@ -50,7 +51,7 @@ Use the "task" tool to delegate work.
 
 ${PLANNER_SYSTEM_PROMPT}
 `,
-    tools: [workspaceHealth, webSearch, documentFetch, pasalSearch, pasalFetch],
+    tools: [workspaceHealth, webSearch, documentFetch, pasalSearch, pasalFetch, digitalPolicySearch],
     subagents: [
       {
         name: "discovery",
@@ -72,8 +73,9 @@ Rules:
 - Always include the source URL and document type classification.
 - Search in the jurisdiction's official language(s) when relevant.
 - For Indonesia (ID): use pasal_search first, then pasal_fetch to retrieve full article text.
+- For Pillar 6 or Pillar 7 queries on any jurisdiction: use digital_policy_search to find recent regulatory interventions and enforcement actions as supplementary context.
 `,
-        tools: [webSearch, documentFetch, pasalSearch, pasalFetch],
+        tools: [webSearch, documentFetch, pasalSearch, pasalFetch, digitalPolicySearch],
       },
       {
         name: "parser",
