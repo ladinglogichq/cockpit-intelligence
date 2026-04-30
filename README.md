@@ -1,14 +1,16 @@
 # Cockpit
 
-AI-powered digital trade regulatory intelligence — built for the [UN ESCAP Global Hackathon on Using AI for Digital Trade Regulatory Analysis 2026](https://www.unescap.org/events/2026/global-hackathon-using-ai-digital-trade-regulatory-analysis).
+AI-powered digital trade regulatory intelligence, built for the [UN ESCAP Global Hackathon on Using AI for Digital Trade Regulatory Analysis 2026](https://www.unescap.org/events/2026/global-hackathon-using-ai-digital-trade-regulatory-analysis).
 
 ## Mission
 
-Digital trade regulations are fragmented across hundreds of jurisdictions, written in multiple languages, and updated continuously. Analysts and policymakers who need to compare regulatory environments — for trade negotiations, compliance, or investment decisions — spend weeks manually reading statutes and mapping clauses to frameworks.
+Digital trade regulations are fragmented across hundreds of jurisdictions, written in multiple languages, and updated continuously.
 
-Cockpit automates this. Given a jurisdiction and a target policy area, Cockpit's AI agent pipeline discovers official legal documents, extracts relevant clauses, maps them to the [RDTII 2.1 framework](https://www.unescap.org/projects/rcdtra/coverage), verifies citations against source text, and produces audit-ready evidence records — in minutes, not weeks.
+Analysts and policymakers who need to compare regulatory environments spend weeks manually reading statutes and mapping clauses to frameworks.
 
-The initial focus is on **Pillar 6** (Cross-Border Data Policies) and **Pillar 7** (Domestic Data Protection & Privacy), with the architecture designed to extend across all 12 RDTII pillars.
+Cockpit automates this. Given a jurisdiction and a target policy area, the AI agent pipeline discovers official legal documents, extracts relevant clauses, maps them to the [RDTII 2.1 framework](https://www.unescap.org/projects/rcdtra/coverage), verifies citations against source text, and produces audit-ready evidence records in minutes.
+
+The initial focus is on **Pillar 6** (Cross-Border Data Policies) and **Pillar 7** (Domestic Data Protection & Privacy). The architecture is designed to extend across all 12 RDTII pillars.
 
 ## RDTII Framework
 
@@ -46,25 +48,25 @@ The [Regional Digital Trade Integration Index (RDTII) 2.1](https://www.unescap.o
 ## How it works
 
 ```
-Discover → Retrieve → Parse (OCR) → Extract clauses → Map to RDTII → Verify citations → Report
+Discover -> Retrieve -> Parse (OCR) -> Extract clauses -> Map to RDTII -> Verify citations -> Report
 ```
 
-1. **Discover** — Web search for official statutes, regulations, and gazettes by jurisdiction
-2. **Retrieve** — Fetch and store legal documents (PDF, HTML, scanned)
-3. **Parse** — OCR extraction for image-based or scanned documents
-4. **Extract** — AI clause extraction targeting specific RDTII pillars
-5. **Map** — Assign clauses to pillar sub-indicators with confidence scores (0–1)
-6. **Verify** — Citation verifier confirms excerpts match source text verbatim
-7. **Report** — Structured EvidenceRecords with full audit traces, ready for cross-jurisdiction comparison
+1. **Discover** -- Web search for official statutes, regulations, and gazettes by jurisdiction
+2. **Retrieve** -- Fetch and store legal documents (PDF, HTML, scanned)
+3. **Parse** -- OCR extraction for image-based or scanned documents
+4. **Extract** -- AI clause extraction targeting specific RDTII pillars
+5. **Map** -- Assign clauses to pillar sub-indicators with confidence scores (0-1)
+6. **Verify** -- Citation verifier confirms excerpts match source text verbatim
+7. **Report** -- Structured EvidenceRecords with full audit traces, ready for cross-jurisdiction comparison
 
-All evidence is traceable: `LegalDocument → Clause → PillarMapping → EvidenceRecord → AuditTrace`.
+All evidence is traceable: `LegalDocument -> Clause -> PillarMapping -> EvidenceRecord -> AuditTrace`.
 
 ## Hackathon
 
-**Event:** UN ESCAP Global Hackathon on Using AI for Digital Trade Regulatory Analysis  
-**Period:** 1 April – 31 October 2026 | Bangkok, Thailand  
-**Application deadline:** 31 May 2026  
-**Apply:** [eng.kmitl.ac.th/digitaltradehack2026](https://www.eng.kmitl.ac.th/digitaltradehack2026/) · [Application form](https://www.jotform.com/form/260591342899065)  
+**Event:** UN ESCAP Global Hackathon on Using AI for Digital Trade Regulatory Analysis
+**Period:** 1 April to 31 October 2026 | Bangkok, Thailand
+**Application deadline:** 31 May 2026
+**Apply:** [eng.kmitl.ac.th/digitaltradehack2026](https://www.eng.kmitl.ac.th/digitaltradehack2026/) · [Application form](https://www.jotform.com/form/260591342899065)
 **Contact:** [trade@un.org](mailto:trade@un.org)
 
 ## Tech stack
@@ -72,6 +74,7 @@ All evidence is traceable: `LegalDocument → Clause → PillarMapping → Evide
 - **Frontend:** Vite 6, React 19, TypeScript, React Router 7, Tailwind CSS
 - **AI:** Anthropic Claude (agent pipeline via LangChain)
 - **Search:** Tavily API (legal document discovery)
+- **Indonesia:** pasal.id API (structured Indonesian legal database)
 - **Backend:** Hono API, Supabase (auth, database, storage)
 
 ## Getting started
@@ -84,13 +87,13 @@ npm run dev
 
 Dev server: [http://localhost:5173](http://localhost:5173)
 
-Optional API: `npm run dev:api` → [http://localhost:8787/health](http://localhost:8787/health), [http://localhost:8787/v1/dashboard](http://localhost:8787/v1/dashboard)
+Optional API: `npm run dev:api` -> [http://localhost:8787/health](http://localhost:8787/health), [http://localhost:8787/v1/dashboard](http://localhost:8787/v1/dashboard)
 
 Agents dry-run (no LLM call): `npm run task-packet:dry-run`
 
 ### Environment
 
-See `frontend/.env.example` — `VITE_SITE_URL`, Supabase vars, and `ANTHROPIC_API_KEY` / `TAVILY_API_KEY` for the agent pipeline.
+See `frontend/.env.example` for required variables: `VITE_SITE_URL`, Supabase vars, `ANTHROPIC_API_KEY`, `TAVILY_API_KEY`, and `PASAL_API_TOKEN` for Indonesian legal document access.
 
 ## Scripts
 
