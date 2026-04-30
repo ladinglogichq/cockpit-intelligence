@@ -1,4 +1,5 @@
 import { createDeepAgent } from "deepagents";
+import { ChatAnthropic } from "@langchain/anthropic";
 import { PLANNER_SYSTEM_PROMPT } from "./context/prompts.js";
 import {
   workspaceHealth,
@@ -8,25 +9,27 @@ import {
   clauseExtractor,
   pillarMapper,
   citationVerifier,
-} from "./tools/stubTools.js";
+} from "./tools/realTools.js";
+import { pasalSearch, pasalFetch } from "./tools/pasalTools.js";
 
-export const DEFAULT_OPENROUTER_MODEL =
-  "openrouter:anthropic/claude-sonnet-4-6" as const;
+export const DEFAULT_MODEL = "claude-sonnet-4-5-20250514" as const;
 
-function resolveCockpitModel(): string {
-  return process.env.OPENROUTER_MODEL?.trim() || DEFAULT_OPENROUTER_MODEL;
+function createModel() {
+  const apiKey = process.env.ANTHROPIC_API_KEY?.trim();
+  if (!apiKey) throw new Error("ANTHROPIC_API_KEY is not set.");
+
+  return new ChatAnthropic({
+    model: process.env.ANTHROPIC_MODEL?.trim() ?? DEFAULT_MODEL,
+    clientOptions: {
+      apiKey,
+      baseURL: process.env.ANTHROPIC_BASE_URL?.trim() ?? "https://agentrouter.org/",
+    },
+  });
 }
 
 export function createCockpitAgent() {
-  const openrouterApiKey = process.env.OPENROUTER_API_KEY?.trim();
-  if (!openrouterApiKey) {
-    throw new Error(
-      "OPENROUTER_API_KEY is not set. Export it or add it to your environment before running the Cockpit agent.",
-    );
-  }
-
   return createDeepAgent({
-    model: resolveCockpitModel(),
+    model: createModel(),
     systemPrompt: `
 You are the Cockpit regulation intelligence supervisor orchestrator.
 
@@ -47,7 +50,7 @@ Use the "task" tool to delegate work.
 
 ${PLANNER_SYSTEM_PROMPT}
 `,
-    tools: [workspaceHealth, webSearch, documentFetch],
+    tools: [workspaceHealth, webSearch, documentFetch, pasalSearch, pasalFetch],
     subagents: [
       {
         name: "discovery",
@@ -61,14 +64,16 @@ You are responsible for:
 - Classifying discovered documents by jurisdiction, language, and legal type (act, regulation, decree, directive, guideline, amendment, treaty, circular).
 - Returning structured document metadata with retrieval URLs for the parser agent.
 
-Use the "web_search" and "document_fetch" tools.
+Use the "web_search" and "document_fetch" tools for most jurisdictions.
+For jurisdiction ID (Indonesia), prefer "pasal_search" and "pasal_fetch" — they return pre-structured articles directly from the official Indonesian legal database, skipping the need for PDF parsing or OCR.
 
 Rules:
 - Prefer official government and regulator sources over secondary legal databases.
 - Always include the source URL and document type classification.
 - Search in the jurisdiction's official language(s) when relevant.
+- For Indonesia (ID): use pasal_search first, then pasal_fetch to retrieve full article text.
 `,
-        tools: [webSearch, documentFetch],
+        tools: [webSearch, documentFetch, pasalSearch, pasalFetch],
       },
       {
         name: "parser",
