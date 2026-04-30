@@ -5,6 +5,8 @@ interface ImportMetaEnv {
   readonly VITE_SUPABASE_URL?: string;
   /** Supabase anon / publishable key (safe for browser; RLS still applies). */
   readonly VITE_SUPABASE_PUBLISHABLE_KEY?: string;
+  /** Cockpit API base URL (e.g. http://localhost:8787 in dev). */
+  readonly VITE_API_URL?: string;
 }
 
 interface ImportMeta {

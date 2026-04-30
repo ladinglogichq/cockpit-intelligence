@@ -4,12 +4,13 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
+    "dev": "tsx --watch --env-file=../agents/.env src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@cockpit/agents": "*",
     "@hono/node-server": "^1.13.0",
     "hono": "^4.6.0"
   },

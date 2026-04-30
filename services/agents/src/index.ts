@@ -1,7 +1,8 @@
+export { runAgentDirect } from "./agentDirect.js";
 export {
   createCockpitAgent,
   getCockpitAgent,
-  DEFAULT_OPENROUTER_MODEL,
+  DEFAULT_MODEL,
 } from "./cockpitAgent.js";
 export { runCockpitAgentWithTaskPacket } from "./runWithTaskPacket.js";
 export { getTaskPacketContextKeys } from "./taskPacketKeys.js";

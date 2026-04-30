@@ -21,11 +21,12 @@ function WorkspaceShellLayoutInner() {
   const isDashboard = pathname === "/dashboard" || pathname === "/dashboard/";
   /** Investigation composer is dashboard-only; operational pages use full viewport for tables and panels. */
   const showInvestigationComposer = isDashboard;
-  const { query, setQuery, attachments, removeAttachment } = useWorkspaceComposer();
+  const { query, setQuery, attachments, removeAttachment, submitInvestigation } = useWorkspaceComposer();
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   function onSubmit(e: FormEvent) {
     e.preventDefault();
+    submitInvestigation();
   }
 
   const navLinkClass = ({ isActive }: { isActive: boolean }) =>
@@ -138,7 +139,13 @@ function WorkspaceShellLayoutInner() {
                       rows={2}
                       value={query}
                       onChange={(e) => setQuery(e.target.value)}
-                      placeholder="Type / for shortcuts · @ for connectors and sources"
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" && !e.shiftKey) {
+                          e.preventDefault();
+                          if (query.trim()) onSubmit(e as unknown as FormEvent);
+                        }
+                      }}
+                      placeholder="Type a query and press Enter or click Send"
                       className="min-h-[3.25rem] w-full resize-none rounded-t-2xl border-0 bg-transparent px-3 py-3 text-[15px] leading-relaxed text-ink placeholder:text-ink-faint focus:outline-none focus:ring-0 dark:text-zinc-100 dark:placeholder:text-zinc-600 sm:px-4 sm:text-base"
                     />
                     {attachments.length > 0 ? (

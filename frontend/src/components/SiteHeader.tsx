@@ -170,8 +170,7 @@ export function SiteHeader() {
                 aria-labelledby={`${productMenuId}-trigger`}
                 className="absolute left-0 top-full z-50 mt-1 min-w-[260px] rounded-md border border-ink/10 bg-canvas py-2 shadow-lg"
               >
-                {productItems.map((item) =>
-                  "href" in item ? (
+                {productItems.map((item) => (
                     <li key={item.id} role="none">
                       <a
                         role="menuitem"
@@ -183,17 +182,6 @@ export function SiteHeader() {
                       >
                         {item.label}
                       </a>
-                    </li>
-                  ) : (
-                    <li key={item.id} role="none">
-                      <span
-                        role="menuitem"
-                        aria-disabled="true"
-                        className="flex cursor-not-allowed items-baseline justify-between gap-2 px-4 py-2.5 text-sm text-ink-faint"
-                      >
-                        <span>{item.label}</span>
-                        <span className="shrink-0 text-xs font-normal text-ink-muted">Coming soon</span>
-                      </span>
                     </li>
                   )
                 )}
@@ -339,8 +327,7 @@ export function SiteHeader() {
                 <li className="border-b border-ink/10 py-3">
                   <p className="text-xs font-semibold uppercase tracking-wider text-ink-muted">Ecosystem</p>
                   <ul className="mt-2 flex flex-col gap-0">
-                    {productItems.map((item) =>
-                      "href" in item ? (
+                    {productItems.map((item) => (
                         <li key={item.id}>
                           <a
                             href={item.href}
@@ -351,13 +338,6 @@ export function SiteHeader() {
                           >
                             {item.label}
                           </a>
-                        </li>
-                      ) : (
-                        <li key={item.id}>
-                          <span className="flex min-h-11 flex-col justify-center py-2 text-base font-medium text-ink-faint">
-                            <span>{item.label}</span>
-                            <span className="text-sm font-normal text-ink-muted">Coming soon</span>
-                          </span>
                         </li>
                       )
                     )}

@@ -26,7 +26,7 @@ export const TaskPacketSchema = z.object({
   jurisdiction: z.string().optional().describe("Jurisdiction ISO 3166-1 alpha-2 code or name"),
   targetPillars: z
     .array(z.enum(["pillar_6", "pillar_7"]))
-    .default(() => ["pillar_6", "pillar_7"]),
+    .default(() => ["pillar_6" as const, "pillar_7" as const]),
   allowedScope: z.array(z.string()).default(() => []),
   mustLoadContext: z.array(z.string()).default(() => []),
   mustCheckSymbols: z.array(z.string()).default(() => []),

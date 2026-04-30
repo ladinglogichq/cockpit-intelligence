@@ -1,68 +1,27 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-  type ReactNode,
-} from "react";
-
-const ENGAGED_KEY = "cockpit_get_started_engaged";
-
-function readEngagedFromStorage(): boolean {
-  try {
-    return sessionStorage.getItem(ENGAGED_KEY) === "1";
-  } catch {
-    return false;
-  }
-}
+import { createContext, useContext, useMemo, type ReactNode } from "react";
+import { useSupabaseAuth } from "./SupabaseAuthContext";
 
 type GetStartedContextValue = {
-  /** True after the user clicks any Get started control (session; persisted in sessionStorage). */
   hasPressedGetStarted: boolean;
   markGetStartedPressed: () => void;
-  /** Clears workspace engagement (e.g. sign out from dashboard shell). */
   clearWorkspaceSession: () => void;
 };
 
 const GetStartedContext = createContext<GetStartedContextValue | null>(null);
 
 export function GetStartedProvider({ children }: { children: ReactNode }) {
-  const [hasPressedGetStarted, setHasPressedGetStarted] = useState(false);
-
-  useEffect(() => {
-    if (readEngagedFromStorage()) setHasPressedGetStarted(true);
-  }, []);
-
-  const markGetStartedPressed = useCallback(() => {
-    setHasPressedGetStarted(true);
-    try {
-      sessionStorage.setItem(ENGAGED_KEY, "1");
-    } catch {
-      /* ignore quota / private mode */
-    }
-  }, []);
-
-  const clearWorkspaceSession = useCallback(() => {
-    setHasPressedGetStarted(false);
-    try {
-      sessionStorage.removeItem(ENGAGED_KEY);
-    } catch {
-      /* ignore */
-    }
-  }, []);
+  const { session } = useSupabaseAuth();
 
   const value = useMemo(
-    () => ({ hasPressedGetStarted, markGetStartedPressed, clearWorkspaceSession }),
-    [hasPressedGetStarted, markGetStartedPressed, clearWorkspaceSession]
+    () => ({
+      hasPressedGetStarted: !!session,
+      markGetStartedPressed: () => {},
+      clearWorkspaceSession: () => {},
+    }),
+    [session]
   );
 
-  return (
-    <GetStartedContext.Provider value={value}>
-      {children}
-    </GetStartedContext.Provider>
-  );
+  return <GetStartedContext.Provider value={value}>{children}</GetStartedContext.Provider>;
 }
 
 export function useGetStarted() {

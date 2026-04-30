@@ -1,17 +1,19 @@
 import { lazy, Suspense, type ReactNode } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { RequireAuth } from "./components/RequireAuth";
 
 /** Marketing site */
 const BlogPage = lazy(async () => ({ default: (await import("./pages/BlogPage")).BlogPage }));
 const ExploreDataPage = lazy(async () => ({ default: (await import("./pages/ExploreDataPage")).ExploreDataPage }));
 const LandingPage = lazy(async () => ({ default: (await import("./pages/LandingPage")).LandingPage }));
+const LoginPage = lazy(async () => ({ default: (await import("./pages/LoginPage")).LoginPage }));
 const PlatformPage = lazy(async () => ({ default: (await import("./pages/PlatformPage")).PlatformPage }));
 const PricingPage = lazy(async () => ({ default: (await import("./pages/PricingPage")).PricingPage }));
 const RiskExposureMethodologyPage = lazy(async () => ({
   default: (await import("./pages/RiskExposureMethodologyPage")).RiskExposureMethodologyPage,
 }));
 
-/** Workspace shell + pages (sidebar + composer — single layout parent) */
+/** Workspace shell + pages */
 const WorkspaceShellLayout = lazy(async () => ({
   default: (await import("./components/dashboard/WorkspaceShellLayout")).WorkspaceShellLayout,
 }));
@@ -40,24 +42,28 @@ export function App() {
   return (
     <Routes>
       {/* Marketing */}
-      <Route path="/" element={withSuspense(<LandingPage />, "Loading landing page…")} />
+      <Route path="/" element={withSuspense(<LandingPage />, "Loading…")} />
+      <Route path="/login" element={withSuspense(<LoginPage />, "Loading…")} />
       <Route path="/blog" element={withSuspense(<BlogPage />, "Loading blog…")} />
       <Route path="/explore-data" element={withSuspense(<ExploreDataPage />, "Loading dataset explorer…")} />
-      <Route
-        path="/methodology/risk-exposure"
-        element={withSuspense(<RiskExposureMethodologyPage />, "Loading methodology…")}
-      />
+      <Route path="/methodology/risk-exposure" element={withSuspense(<RiskExposureMethodologyPage />, "Loading methodology…")} />
       <Route path="/platform" element={withSuspense(<PlatformPage />, "Loading platform…")} />
       <Route path="/pricing" element={withSuspense(<PricingPage />, "Loading pricing…")} />
 
-      <Route element={withSuspense(<WorkspaceShellLayout />, "Loading workspace…")}>
-        <Route path="/dashboard" element={withSuspense(<DashboardPage />, "Loading dashboard…")} />
-        <Route path="/alerts" element={withSuspense(<AlertsPage />, "Loading alerts…")} />
-        <Route path="/cases" element={withSuspense(<CasesPage />, "Loading cases…")} />
-        <Route path="/entities" element={withSuspense(<EntitiesPage />, "Loading entities…")} />
-        <Route path="/reports" element={withSuspense(<ReportsPage />, "Loading reports…")} />
-        <Route path="/api-keys" element={withSuspense(<ApiKeysPage />, "Loading API keys…")} />
+      {/* Protected workspace */}
+      <Route element={<RequireAuth />}>
+        <Route element={withSuspense(<WorkspaceShellLayout />, "Loading workspace…")}>
+          <Route path="/dashboard" element={withSuspense(<DashboardPage />, "Loading dashboard…")} />
+          <Route path="/alerts" element={withSuspense(<AlertsPage />, "Loading alerts…")} />
+          <Route path="/cases" element={withSuspense(<CasesPage />, "Loading cases…")} />
+          <Route path="/entities" element={withSuspense(<EntitiesPage />, "Loading entities…")} />
+          <Route path="/reports" element={withSuspense(<ReportsPage />, "Loading reports…")} />
+          <Route path="/api-keys" element={withSuspense(<ApiKeysPage />, "Loading API keys…")} />
+        </Route>
       </Route>
+
+      {/* Catch-all — redirect unknown paths to home */}
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }

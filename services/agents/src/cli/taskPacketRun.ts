@@ -11,8 +11,8 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const agentsRoot = path.resolve(here, "../..");
 
 async function main() {
-  if (!process.env.OPENROUTER_API_KEY?.trim()) {
-    console.error("Missing OPENROUTER_API_KEY — set it to run the agent, or use npm run task-packet:dry-run instead.");
+  if (!process.env.ANTHROPIC_API_KEY?.trim()) {
+    console.error("Missing ANTHROPIC_API_KEY — set it to run the agent, or use npm run task-packet:dry-run instead.");
     process.exit(2);
   }
   const fileArg = process.argv[2];

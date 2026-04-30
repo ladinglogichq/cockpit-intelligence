@@ -1,21 +1,23 @@
 import { FormEvent, useState } from "react";
+import { supabase } from "../utils/supabase";
 
 export function Newsletter() {
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<"idle" | "sent" | "duplicate" | "error">("idle");
 
-  function onSubmit(e: FormEvent<HTMLFormElement>) {
+  async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const form = e.currentTarget;
-    const raw = new FormData(form).get("email");
+    const raw = new FormData(e.currentTarget).get("email");
     const email = typeof raw === "string" ? raw.trim() : "";
     if (!email) return;
 
-    const subject = encodeURIComponent("Cockpit newsletter / product updates");
-    const body = encodeURIComponent(
-      `Please add this address for Cockpit product notes and releases:\n\n${email}\n`,
-    );
-    window.location.href = `mailto:support@daemonprotocol.com?subject=${subject}&body=${body}`;
-    setSent(true);
+    const { error } = await supabase
+      .from("newsletter_signups")
+      .insert({ email });
+
+    if (!error) { setStatus("sent"); return; }
+    // Postgres unique violation code
+    if (error.code === "23505") { setStatus("duplicate"); return; }
+    setStatus("error");
   }
 
   return (
@@ -34,12 +36,16 @@ export function Newsletter() {
             </p>
           </div>
           <div>
-            {sent ? (
+            {status === "sent" ? (
               <p className="border border-canvas/25 bg-canvas/10 px-6 py-8 text-canvas">
                 Thanks. We&apos;ll be in touch when there&apos;s something worth your inbox.
               </p>
+            ) : status === "duplicate" ? (
+              <p className="border border-canvas/25 bg-canvas/10 px-6 py-8 text-canvas">
+                You&apos;re already subscribed.
+              </p>
             ) : (
-              <form onSubmit={onSubmit} aria-describedby="newsletter-mailto-hint">
+              <form onSubmit={onSubmit}>
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:gap-6">
                   <label className="sr-only" htmlFor="newsletter-email">
                     Email address
@@ -59,21 +65,16 @@ export function Newsletter() {
                   <button
                     type="submit"
                     className="inline-flex min-h-[48px] min-w-[48px] shrink-0 items-center justify-center text-2xl font-light text-canvas transition-opacity hover:opacity-80"
-                    aria-label="Open email to send request to support@daemonprotocol.com"
+                    aria-label="Subscribe to newsletter"
                   >
                     →
                   </button>
                 </div>
-                <p id="newsletter-mailto-hint" className="mt-3 text-sm text-canvas/55">
-                  Opens your mail app to send a message to{" "}
-                  <a
-                    href="mailto:support@daemonprotocol.com"
-                    className="text-canvas/85 underline decoration-canvas/35 underline-offset-2 transition hover:decoration-canvas/70"
-                  >
-                    support@daemonprotocol.com
-                  </a>
-                  .
-                </p>
+                {status === "error" ? (
+                  <p className="mt-3 text-sm text-canvas/70" role="alert">
+                    Something went wrong. Please try again.
+                  </p>
+                ) : null}
               </form>
             )}
           </div>

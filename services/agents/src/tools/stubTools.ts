@@ -29,8 +29,45 @@ export const workspaceHealth = tool(
 export const webSearch = tool(
   async ({ query, jurisdiction, limit }: { query: string; jurisdiction?: string; limit?: number }) => {
     const cap = Math.min(Math.max(limit ?? 10, 1), 50);
-    const scope = jurisdiction ? ` [jurisdiction: ${jurisdiction}]` : "";
-    return `[stub] Web search for legal documents: "${query}"${scope} (limit: ${cap}) — wire Tavily or equivalent search provider.`;
+    const apiKey = process.env.TAVILY_API_KEY?.trim();
+
+    if (!apiKey) {
+      const scope = jurisdiction ? ` [jurisdiction: ${jurisdiction}]` : "";
+      return `[stub — set TAVILY_API_KEY to enable] Web search: "${query}"${scope}`;
+    }
+
+    const scopedQuery = jurisdiction ? `${query} ${jurisdiction}` : query;
+
+    const res = await fetch("https://api.tavily.com/search", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        api_key: apiKey,
+        query: scopedQuery,
+        max_results: cap,
+        search_depth: "advanced",
+        include_answer: true,
+      }),
+    });
+
+    if (!res.ok) {
+      if (res.status === 429) throw new Error("Tavily rate limit hit — retry after backoff");
+      throw new Error(`Tavily search failed: ${res.status}`);
+    }
+
+    const data = await res.json() as {
+      answer?: string;
+      results: { title: string; url: string; content: string; score: number }[];
+    };
+
+    const results = data.results.map((r) => ({
+      title: r.title,
+      url: r.url,
+      snippet: r.content.slice(0, 400),
+      score: r.score,
+    }));
+
+    return JSON.stringify({ answer: data.answer ?? null, results });
   },
   {
     name: "web_search",

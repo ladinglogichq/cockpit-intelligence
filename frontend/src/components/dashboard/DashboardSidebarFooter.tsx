@@ -1,7 +1,7 @@
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useGetStarted } from "../../context/GetStartedContext";
+import { useSupabaseAuth } from "../../context/SupabaseAuthContext";
 import { useDashboardTheme, type DashboardAppearance } from "../../context/DashboardThemeContext";
 import { initialsFromDisplayName, useWorkspaceProfile } from "../../context/WorkspaceProfileContext";
 import { WorkspaceAccountModals, type WorkspaceAccountPanel } from "./WorkspaceAccountModals";
@@ -85,8 +85,8 @@ function useMenuSurface(effectiveDark: boolean): MenuSurface {
 
 export function DashboardSidebarFooter() {
   const navigate = useNavigate();
-  const { clearWorkspaceSession } = useGetStarted();
-  const { displayName, email, avatarDataUrl, resetProfile } = useWorkspaceProfile();
+  const { signOut } = useSupabaseAuth();
+  const { displayName, email, avatarDataUrl } = useWorkspaceProfile();
   const { appearance, setAppearance, effectiveDark, appearanceDescription } = useDashboardTheme();
   const surface = useMenuSurface(effectiveDark);
   const [helpPanel, setHelpPanel] = useState<WorkspaceHelpPanel>(null);
@@ -105,10 +105,9 @@ export function DashboardSidebarFooter() {
     return () => document.removeEventListener("keydown", onKeyDown);
   }, []);
 
-  function onSignOut() {
-    clearWorkspaceSession();
-    resetProfile();
-    navigate("/");
+  async function onSignOut() {
+    await signOut();
+    navigate("/login");
   }
 
   const avatarInitials = initialsFromDisplayName(displayName);

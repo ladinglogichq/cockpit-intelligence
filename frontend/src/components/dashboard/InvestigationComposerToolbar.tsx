@@ -103,6 +103,7 @@ export function InvestigationComposerToolbar() {
     attachments,
     addAttachmentsFromFiles,
     clearAttachments,
+    investigateState,
   } = useWorkspaceComposer();
 
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -223,11 +224,17 @@ export function InvestigationComposerToolbar() {
 
         <button
           type="submit"
-          disabled={!query.trim()}
+          disabled={!query.trim() || investigateState.status === "loading"}
           className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-ink text-canvas transition hover:bg-ink/90 disabled:cursor-not-allowed disabled:opacity-35 dark:bg-zinc-100 dark:text-zinc-950 dark:hover:bg-zinc-200"
-          aria-label="Send"
+          aria-label={investigateState.status === "loading" ? "Running…" : "Send"}
         >
-          <SendIcon />
+          {investigateState.status === "loading" ? (
+            <svg className="animate-spin" width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} aria-hidden>
+              <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" strokeLinecap="round"/>
+            </svg>
+          ) : (
+            <SendIcon />
+          )}
         </button>
       </div>
     </div>

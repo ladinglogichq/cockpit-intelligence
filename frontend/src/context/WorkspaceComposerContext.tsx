@@ -8,6 +8,7 @@ import {
   type ReactNode,
   type SetStateAction,
 } from "react";
+import { useInvestigate, type InvestigateState } from "../hooks/useInvestigate";
 
 export type ComposerMode = "investigation" | "research_note" | "compliance_review";
 
@@ -40,6 +41,9 @@ type WorkspaceComposerContextValue = {
   addAttachmentsFromFiles: (files: FileList | File[]) => void;
   removeAttachment: (id: string) => void;
   clearAttachments: () => void;
+  investigateState: InvestigateState;
+  submitInvestigation: () => void;
+  resetInvestigation: () => void;
 };
 
 const WorkspaceComposerContext = createContext<WorkspaceComposerContextValue | null>(null);
@@ -58,17 +62,14 @@ export function WorkspaceComposerProvider({ children }: { children: ReactNode })
   const [responseLength, setResponseLength] = useState<ResponseLength>("balanced");
   const [citationsMode, setCitationsMode] = useState<CitationsMode>("when_relevant");
   const [attachments, setAttachments] = useState<ComposerAttachment[]>([]);
+  const { state: investigateState, investigate, reset: resetInvestigation } = useInvestigate();
 
   const addAttachmentsFromFiles = useCallback((files: FileList | File[]) => {
     const list = Array.isArray(files) ? files : Array.from(files);
     if (list.length === 0) return;
     setAttachments((prev) => [
       ...prev,
-      ...list.map((f) => ({
-        id: makeAttachmentId(),
-        name: f.name,
-        size: f.size,
-      })),
+      ...list.map((f) => ({ id: makeAttachmentId(), name: f.name, size: f.size })),
     ]);
   }, []);
 
@@ -76,9 +77,12 @@ export function WorkspaceComposerProvider({ children }: { children: ReactNode })
     setAttachments((prev) => prev.filter((a) => a.id !== id));
   }, []);
 
-  const clearAttachments = useCallback(() => {
-    setAttachments([]);
-  }, []);
+  const clearAttachments = useCallback(() => setAttachments([]), []);
+
+  const submitInvestigation = useCallback(() => {
+    if (!query.trim()) return;
+    investigate(query.trim(), composerMode);
+  }, [query, composerMode, investigate]);
 
   const value = useMemo(
     () => ({
@@ -94,16 +98,26 @@ export function WorkspaceComposerProvider({ children }: { children: ReactNode })
       addAttachmentsFromFiles,
       removeAttachment,
       clearAttachments,
+      investigateState,
+      submitInvestigation,
+      resetInvestigation,
     }),
     [
       query,
+      setQuery,
       composerMode,
+      setComposerMode,
       responseLength,
+      setResponseLength,
       citationsMode,
+      setCitationsMode,
       attachments,
       addAttachmentsFromFiles,
       removeAttachment,
       clearAttachments,
+      investigateState,
+      submitInvestigation,
+      resetInvestigation,
     ]
   );
 
