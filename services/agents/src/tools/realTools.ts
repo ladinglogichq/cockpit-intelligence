@@ -2,6 +2,7 @@ import { tool } from "langchain";
 import { z } from "zod";
 import pdf from "pdf-parse";
 import Anthropic from "@anthropic-ai/sdk";
+import OpenAI from "openai";
 import type { Jurisdiction, LegalDocument, Clause, PillarMapping, AuditTrace } from "../context/schemas.js";
 // Re-export webSearch and workspaceHealth from stubTools
 import { webSearch as webSearchStub, workspaceHealth as workspaceHealthStub } from "./stubTools.js";
@@ -12,7 +13,12 @@ import { webSearch as webSearchStub, workspaceHealth as workspaceHealthStub } fr
 
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY ?? "",
+  baseURL: process.env.ANTHROPIC_BASE_URL?.trim(),
 });
+
+const zaiClient = process.env.ZAI_API_KEY
+  ? new OpenAI({ apiKey: process.env.ZAI_API_KEY, baseURL: "https://api.z.ai/api/paas/v4/" })
+  : null;
 
 function generateId(): string {
   return `id-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
@@ -22,16 +28,30 @@ async function streamClaudeText(
   system: string,
   prompt: string,
 ): Promise<string> {
-  const response = await anthropic.messages.create({
-    model: "claude-3-5-sonnet-20241022",
-    max_tokens: 8192,
-    system,
-    messages: [{ role: "user", content: prompt }],
-    stream: false,
-  });
-
-  const content = response.content[0];
-  return content.type === "text" ? content.text : "";
+  try {
+    const response = await anthropic.messages.create({
+      model: process.env.ANTHROPIC_MODEL ?? "claude-sonnet-4-5-20250929",
+      max_tokens: 8192,
+      system,
+      messages: [{ role: "user", content: prompt }],
+      stream: false,
+    });
+    const content = response.content[0];
+    return content.type === "text" ? content.text : "";
+  } catch (err) {
+    if (!zaiClient) throw err;
+    console.warn("[realTools] Anthropic failed, falling back to z.ai:", (err as Error).message);
+    const response = await zaiClient.chat.completions.create({
+      model: process.env.ZAI_MODEL ?? "glm-5.1",
+      max_tokens: 8192,
+      messages: [
+        { role: "system", content: system },
+        { role: "user", content: prompt },
+      ],
+    });
+    const msg = response.choices[0]?.message as any;
+    return msg?.content || msg?.reasoning_content || "";
+  }
 }
 
 // ============================================================================
@@ -254,15 +274,14 @@ Extract clauses following the specified pillar targets and return only valid JSO
 
       const extractedText = await streamClaudeText(system, prompt);
 
-      // Try to parse JSON from response
-      const jsonMatch = extractedText.match(/\[[\s\S]*?\{[\s\S\S]*?\}/);
-      if (jsonMatch) {
-        return jsonMatch[0];
-      }
+      // Strip markdown code fences if present
+      const stripped = extractedText.replace(/^```(?:json)?\s*/m, "").replace(/\s*```\s*$/m, "").trim();
 
-      // Fallback: parse as-is if it looks like JSON
-      if (extractedText.trim().startsWith("[") && extractedText.trim().endsWith("]")) {
-        return extractedText;
+      // Try to extract JSON array
+      const startIdx = stripped.indexOf("[");
+      const endIdx = stripped.lastIndexOf("]");
+      if (startIdx >= 0 && endIdx > startIdx) {
+        return stripped.slice(startIdx, endIdx + 1);
       }
 
       // If parsing failed, return structured error

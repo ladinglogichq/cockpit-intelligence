@@ -40,7 +40,7 @@ export const pasalSearch = tool(
       results: data.results.map((r) => ({
         snippet: r.snippet,
         score: r.score,
-        articleNumber: `${r.metadata.node_type} ${r.metadata.node_number}`,
+        articleNumber: r.metadata ? `${r.metadata.node_type} ${r.metadata.node_number}` : undefined,
         law: {
           frbrUri: r.work.frbr_uri,
           title: r.work.title,
