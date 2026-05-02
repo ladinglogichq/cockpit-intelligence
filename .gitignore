@@ -42,3 +42,5 @@ coverage/
 agent-os
 sandbox-workspace/
 workspace/
+convo.md
+.agents/
