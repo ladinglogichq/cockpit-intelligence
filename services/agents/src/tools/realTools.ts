@@ -13,7 +13,7 @@ import { webSearch as webSearchStub, workspaceHealth as workspaceHealthStub } fr
 
 const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY ?? "",
-  baseURL: process.env.ANTHROPIC_BASE_URL?.trim(),
+  baseURL: process.env.ANTHROPIC_BASE_URL?.trim() ?? "https://api.z.ai/api/anthropic/",
 });
 
 const zaiClient = process.env.ZAI_API_KEY
@@ -30,7 +30,7 @@ async function streamClaudeText(
 ): Promise<string> {
   try {
     const response = await anthropic.messages.create({
-      model: process.env.ANTHROPIC_MODEL ?? "claude-sonnet-4-5-20250929",
+      model: process.env.ANTHROPIC_MODEL ?? "glm-5.1",
       max_tokens: 8192,
       system,
       messages: [{ role: "user", content: prompt }],
@@ -40,7 +40,7 @@ async function streamClaudeText(
     return content.type === "text" ? content.text : "";
   } catch (err) {
     if (!zaiClient) throw err;
-    console.warn("[realTools] Anthropic failed, falling back to z.ai:", (err as Error).message);
+    console.warn("[realTools] AgentRouter failed, falling back to z.ai:", (err as Error).message);
     const response = await zaiClient.chat.completions.create({
       model: process.env.ZAI_MODEL ?? "glm-5.1",
       max_tokens: 8192,

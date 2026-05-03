@@ -1,10 +1,10 @@
 import { ChatAnthropic } from "@langchain/anthropic";
 
 const m = new ChatAnthropic({
-  model: process.env.ANTHROPIC_MODEL ?? "claude-sonnet-4-5-20250514",
+  model: process.env.ANTHROPIC_MODEL ?? "claude-sonnet-4-5-20250929",
   clientOptions: {
     apiKey: process.env.ANTHROPIC_API_KEY,
-    baseURL: process.env.ANTHROPIC_BASE_URL ?? "https://agentrouter.org/",
+    baseURL: process.env.ANTHROPIC_BASE_URL ?? "https://api.z.ai/api/anthropic/",
   },
 });
 

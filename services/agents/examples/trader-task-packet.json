@@ -1,0 +1,28 @@
+{
+  "goal": "An electronics export company based in Thailand is expanding e-commerce operations into Singapore and Indonesia. They collect customer personal data (names, addresses, payment info) and need to understand: (1) what cross-border data transfer rules apply when sending customer data from SG/ID to their Thai HQ servers, (2) what data localization requirements exist in each market, and (3) what data protection obligations they must comply with as a foreign data controller. Extract and map all relevant clauses from Singapore PDPA and Indonesia PDP Law to RDTII Pillar 6 and Pillar 7.",
+  "why": "Simulate real usage by a digital trader / export-import company assessing regulatory compliance before market entry",
+  "taskType": "extraction",
+  "jurisdiction": "SG",
+  "targetPillars": ["pillar_6", "pillar_7"],
+  "allowedScope": ["services/agents/src"],
+  "mustLoadContext": ["domain.rdtii-pillars", "domain.entities", "domain.evidence-pipeline"],
+  "mustCheckSymbols": ["clauseExtractor", "pillarMapper", "citationVerifier"],
+  "constraints": [
+    "no client-side secrets",
+    "preserve citation provenance",
+    "flag any clause with confidence < 0.7 for human review",
+    "include cross-border transfer rules, localization requirements, and foreign controller obligations"
+  ],
+  "deliverable": [
+    "evidence records for SG PDPA cross-border transfer rules (Pillar 6)",
+    "evidence records for SG PDPA data protection obligations (Pillar 7)",
+    "evidence records for ID PDP Law cross-border transfer rules (Pillar 6)",
+    "evidence records for ID PDP Law data protection obligations (Pillar 7)",
+    "compliance gap summary for Thai exporter"
+  ],
+  "doneCriteria": [
+    "at least 2 clauses extracted per jurisdiction per pillar",
+    "all mappings have confidence scores",
+    "citations verified against source"
+  ]
+}

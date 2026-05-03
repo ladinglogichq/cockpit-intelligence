@@ -1,5 +1,5 @@
 import { createDeepAgent } from "deepagents";
-import { ChatAnthropic } from "@langchain/anthropic";
+import { ChatOpenAI } from "@langchain/openai";
 import { PLANNER_SYSTEM_PROMPT } from "./context/prompts.js";
 import {
   workspaceHealth,
@@ -13,17 +13,17 @@ import {
 import { pasalSearch, pasalFetch } from "./tools/pasalTools.js";
 import { digitalPolicySearch } from "./tools/digitalPolicyTools.js";
 
-export const DEFAULT_MODEL = "claude-sonnet-4-5-20250514" as const;
+export const DEFAULT_MODEL = "glm-5.1" as const;
 
 function createModel() {
-  const apiKey = process.env.ANTHROPIC_API_KEY?.trim();
-  if (!apiKey) throw new Error("ANTHROPIC_API_KEY is not set.");
+  const apiKey = process.env.ZAI_API_KEY?.trim() ?? process.env.ANTHROPIC_API_KEY?.trim();
+  if (!apiKey) throw new Error("ZAI_API_KEY is not set.");
 
-  return new ChatAnthropic({
-    model: process.env.ANTHROPIC_MODEL?.trim() ?? DEFAULT_MODEL,
-    clientOptions: {
-      apiKey,
-      baseURL: process.env.ANTHROPIC_BASE_URL?.trim() ?? "https://agentrouter.org/",
+  return new ChatOpenAI({
+    modelName: process.env.ANTHROPIC_MODEL?.trim() ?? DEFAULT_MODEL,
+    openAIApiKey: apiKey,
+    configuration: {
+      baseURL: "https://api.z.ai/api/paas/v4/",
     },
   });
 }

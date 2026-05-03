@@ -1,4 +1,5 @@
 import Anthropic from "@anthropic-ai/sdk";
+import OpenAI from "openai";
 import { PLANNER_SYSTEM_PROMPT } from "./context/prompts.js";
 import {
   workspaceHealth,
@@ -31,51 +32,53 @@ const TOOL_HANDLERS: Record<string, (input: Record<string, unknown>) => Promise<
 };
 
 export async function runAgentDirect(userMessage: string): Promise<string> {
-  const apiKey = process.env.ANTHROPIC_API_KEY?.trim();
-  if (!apiKey) throw new Error("ANTHROPIC_API_KEY is not set.");
+  const apiKey = process.env.ZAI_API_KEY?.trim() ?? process.env.ANTHROPIC_API_KEY?.trim();
+  if (!apiKey) throw new Error("ZAI_API_KEY is not set.");
 
-  const client = new Anthropic({
+  const openai = new OpenAI({
     apiKey,
-    baseURL: process.env.ANTHROPIC_BASE_URL?.trim() ?? "https://agentrouter.org/",
+    baseURL: "https://api.z.ai/api/paas/v4/",
   });
 
-  const model = process.env.ANTHROPIC_MODEL?.trim() ?? "claude-3-5-sonnet-20241022";
-  const messages: Anthropic.MessageParam[] = [{ role: "user", content: userMessage }];
+  const model = process.env.ANTHROPIC_MODEL?.trim() ?? "glm-5.1";
+  const messages: OpenAI.Chat.ChatCompletionMessageParam[] = [{ role: "user", content: userMessage }];
 
   for (let turn = 0; turn < 10; turn++) {
-    const response = await client.messages.create({
+    const response = await openai.chat.completions.create({
       model,
       max_tokens: 4096,
-      system: PLANNER_SYSTEM_PROMPT,
-      tools: TOOL_DEFS,
-      messages,
+      messages: [{ role: "system", content: PLANNER_SYSTEM_PROMPT }, ...messages],
+      tools: TOOL_DEFS.map((t) => ({
+        type: "function" as const,
+        function: {
+          name: t.name,
+          description: t.description,
+          parameters: t.input_schema,
+        },
+      })),
     });
 
-    messages.push({ role: "assistant", content: response.content });
+    const choice = response.choices[0];
+    messages.push({ role: "assistant", content: choice.message.content ?? null, tool_calls: choice.message.tool_calls });
 
-    if (response.stop_reason === "tool_use") {
-      const toolResults: Anthropic.ToolResultBlockParam[] = [];
-      for (const block of response.content) {
-        if (block.type !== "tool_use") continue;
-        const handler = TOOL_HANDLERS[block.name];
+    if (choice.finish_reason === "tool_calls" && choice.message.tool_calls?.length) {
+      for (const tc of choice.message.tool_calls) {
+        const handler = TOOL_HANDLERS[tc.function.name];
         let result: string;
         try {
-          result = handler ? await handler(block.input as Record<string, unknown>) : `Unknown tool: ${block.name}`;
+          result = handler
+            ? await handler(JSON.parse(tc.function.arguments) as Record<string, unknown>)
+            : `Unknown tool: ${tc.function.name}`;
         } catch (err) {
           result = `Error: ${err instanceof Error ? err.message : String(err)}`;
         }
-        toolResults.push({ type: "tool_result", tool_use_id: block.id, content: result });
+        messages.push({ role: "tool", tool_call_id: tc.id, content: result });
       }
-
-      messages.push({ role: "user", content: toolResults });
       continue;
     }
 
-    if (response.stop_reason) {
-      return response.content
-        .filter((b): b is Anthropic.TextBlock => b.type === "text")
-        .map((b) => b.text)
-        .join("\n");
+    if (choice.finish_reason) {
+      return choice.message.content ?? "";
     }
   }
 

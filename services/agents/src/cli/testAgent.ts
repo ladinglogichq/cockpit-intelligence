@@ -5,20 +5,19 @@ if (!apiKey) throw new Error("ANTHROPIC_API_KEY is not set.");
 
 const client = new Anthropic({
   apiKey,
-  baseURL: process.env.ANTHROPIC_BASE_URL?.trim() ?? "https://agentrouter.org/",
+  baseURL: process.env.ANTHROPIC_BASE_URL?.trim() ?? "https://api.z.ai/api/anthropic/",
 });
 
 export async function testAgent() {
   const message = "What are cross-border data transfer rules in Singapore PDPA? Be concise.";
   const response = await client.messages.create({
-    model: "claude-3-5-sonnet-20241022",
+    model: process.env.ANTHROPIC_MODEL ?? "claude-sonnet-4-5-20250929",
     max_tokens: 4096,
-    messages: [
-      { role: "user", content: message },
-    ],
+    messages: [{ role: "user", content: message }],
   });
 
-  const content = response.content[0]?.text;
+  const block = response.content[0];
+  const content = block?.type === "text" ? block.text : undefined;
   console.log("Response:", content);
   return content || "No response";
 }

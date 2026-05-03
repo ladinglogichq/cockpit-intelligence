@@ -16,22 +16,22 @@ function check(label: string, ok: boolean, detail?: string) {
 }
 
 async function testAnthropicDirect() {
-  console.log("\n── Anthropic / AgentRouter ──");
+  console.log("\n── z.ai Anthropic-compatible endpoint ──");
   try {
     const { default: Anthropic } = await import("@anthropic-ai/sdk");
     const client = new Anthropic({
       apiKey: process.env.ANTHROPIC_API_KEY ?? "",
-      baseURL: process.env.ANTHROPIC_BASE_URL ?? "https://agentrouter.org/",
+      baseURL: process.env.ANTHROPIC_BASE_URL ?? "https://api.z.ai/api/anthropic/",
     });
     const res = await client.messages.create({
-      model: process.env.ANTHROPIC_MODEL ?? "claude-sonnet-4-5-20250514",
+      model: process.env.ANTHROPIC_MODEL ?? "claude-sonnet-4-5-20250929",
       max_tokens: 64,
       messages: [{ role: "user", content: "Reply with exactly: OK" }],
     });
     const text = res.content[0]?.type === "text" ? res.content[0].text.trim() : "";
-    check("Anthropic API reachable", text.length > 0, text.slice(0, 80));
+    check("z.ai Anthropic endpoint reachable", text.length > 0, text.slice(0, 80));
   } catch (err: any) {
-    check("Anthropic API reachable", false, err?.message?.slice(0, 120) ?? String(err));
+    check("z.ai Anthropic endpoint reachable", false, err?.message?.slice(0, 120) ?? String(err));
   }
 
   if (process.env.ZAI_API_KEY) {
