@@ -1,26 +1,64 @@
 import { tool } from "langchain";
 import { z } from "zod";
 
-/** Returns a small JSON string for wiring checks — no external services. */
+/** Returns live health status for all Cockpit tool dependencies. */
 export const workspaceHealth = tool(
-  async () =>
-    JSON.stringify({
-      ok: true,
+  async () => {
+    const checks = await Promise.allSettled([
+      // Tavily
+      process.env.TAVILY_API_KEY
+        ? fetch("https://api.tavily.com/search", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ api_key: process.env.TAVILY_API_KEY, query: "test", max_results: 1 }),
+            signal: AbortSignal.timeout(5000),
+          }).then(r => ({ service: "tavily", ok: r.ok, status: r.status }))
+        : Promise.resolve({ service: "tavily", ok: false, status: "no_api_key" }),
+
+      // pasal.id
+      process.env.PASAL_API_TOKEN
+        ? fetch("https://pasal.id/api/v1/search?q=test&limit=1", {
+            headers: { Authorization: `Bearer ${process.env.PASAL_API_TOKEN}` },
+            signal: AbortSignal.timeout(5000),
+          }).then(r => ({ service: "pasal", ok: r.ok, status: r.status }))
+        : Promise.resolve({ service: "pasal", ok: false, status: "no_api_key" }),
+
+      // Digital Policy Alert
+      Promise.resolve({
+        service: "digital_policy_alert",
+        ok: !!process.env.DIGITAL_POLICY_ALERT_API_KEY,
+        status: process.env.DIGITAL_POLICY_ALERT_API_KEY ? "key_present" : "no_api_key",
+      }),
+
+      // Supabase
+      Promise.resolve({
+        service: "supabase",
+        ok: !!(process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL),
+        status: (process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL) ? "configured" : "not_configured",
+      }),
+
+      // OCR
+      Promise.resolve({
+        service: "ocr",
+        ok: false,
+        status: "stub — tesseract.js integration pending image storage configuration",
+      }),
+    ]);
+
+    const services = checks.map(r =>
+      r.status === "fulfilled" ? r.value : { service: "unknown", ok: false, status: "check_failed" }
+    );
+
+    return JSON.stringify({
+      ok: services.every(s => s.ok),
       service: "cockpit-agents",
-      tools: [
-        "web_search",
-        "document_fetch",
-        "ocr_extract",
-        "clause_extractor",
-        "pillar_mapper",
-        "citation_verifier",
-        "workspace_health",
-      ],
-    }),
+      services,
+      checkedAt: new Date().toISOString(),
+    });
+  },
   {
     name: "workspace_health",
-    description:
-      "Return runtime health for the Cockpit agent workspace (stub; use to verify tool routing without calling external APIs).",
+    description: "Return live health status for all Cockpit tool dependencies: Tavily, pasal.id, Digital Policy Alert, Supabase, and OCR.",
     schema: z.object({}),
   }
 );

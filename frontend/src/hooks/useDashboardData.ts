@@ -7,12 +7,16 @@ export function useDashboardData(): {
   data: DashboardSnapshot | null;
   loading: boolean;
   error: string | null;
+  refetch: () => void;
   clearWorkspace: () => Promise<void>;
 } {
   const { user } = useSupabaseAuth();
   const [data, setData] = useState<DashboardSnapshot | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [tick, setTick] = useState(0);
+
+  const refetch = useCallback(() => setTick((t) => t + 1), []);
 
   const clearWorkspace = useCallback(async () => {
     if (!user) return;
@@ -94,7 +98,7 @@ export function useDashboardData(): {
     });
 
     return () => { cancelled = true; };
-  }, [user]);
+  }, [user, tick]);
 
-  return { data, loading, error, clearWorkspace };
+  return { data, loading, error, refetch, clearWorkspace };
 }

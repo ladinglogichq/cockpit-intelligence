@@ -1,4 +1,5 @@
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useMemo, useState } from "react";
+import { marked } from "marked";
 import { useWorkspaceComposer } from "../context/WorkspaceComposerContext";
 import { useDashboardData } from "../hooks/useDashboardData";
 import { DashboardOverview } from "../components/DashboardOverview";
@@ -13,7 +14,7 @@ const SUGGESTIONS = [
 export function DashboardPage() {
   const { setQuery, investigateState, resetInvestigation } = useWorkspaceComposer();
   const headingId = useId();
-  const { data, loading, error, clearWorkspace } = useDashboardData();
+  const { data, loading, error, refetch, clearWorkspace } = useDashboardData();
   const [isClearing, setIsClearing] = useState(false);
 
   useEffect(() => {
@@ -22,13 +23,19 @@ export function DashboardPage() {
     return () => { document.title = prev; };
   }, []);
 
-  // Reset investigation state on page load for clean slate
+  // Auto-refresh dashboard when investigation persists new records
   useEffect(() => {
-    resetInvestigation();
-  }, [resetInvestigation]);
+    if (investigateState.status === "done" && investigateState.persisted) {
+      refetch();
+    }
+  }, [investigateState, refetch]);
+
+  const renderedMarkdown = useMemo(() => {
+    if (investigateState.status !== "done") return "";
+    return marked.parse(investigateState.content, { async: false }) as string;
+  }, [investigateState]);
 
   async function handleClearWorkspace() {
-    setIsClearing(true);
     await clearWorkspace();
     resetInvestigation();
     setIsClearing(false);
@@ -69,13 +76,20 @@ export function DashboardPage() {
               <p className="text-xs font-semibold uppercase tracking-wider text-ink-muted dark:text-zinc-500">
                 Investigation result
               </p>
-              <button
-                type="button"
-                onClick={resetInvestigation}
-                className="text-xs text-ink-muted hover:text-ink dark:text-zinc-500 dark:hover:text-zinc-300"
-              >
-                Clear
-              </button>
+              <div className="flex items-center gap-3">
+                {investigateState.status === "done" && investigateState.persisted ? (
+                  <span className="rounded-full bg-emerald-500/15 px-2 py-0.5 text-xs font-medium text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300">
+                    {investigateState.persisted} record{investigateState.persisted !== 1 ? "s" : ""} saved
+                  </span>
+                ) : null}
+                <button
+                  type="button"
+                  onClick={resetInvestigation}
+                  className="text-xs text-ink-muted hover:text-ink dark:text-zinc-500 dark:hover:text-zinc-300"
+                >
+                  Clear
+                </button>
+              </div>
             </div>
             <div className="px-4 py-4 text-sm leading-relaxed text-ink dark:text-zinc-200">
               {investigateState.status === "loading" && (
@@ -87,7 +101,10 @@ export function DashboardPage() {
                 </p>
               )}
               {investigateState.status === "done" && (
-                <pre className="whitespace-pre-wrap font-sans">{investigateState.content}</pre>
+                <div
+                  className="prose prose-sm max-w-none dark:prose-invert prose-table:text-xs prose-th:font-semibold prose-td:align-top prose-headings:font-display prose-headings:font-semibold prose-code:text-xs prose-code:bg-ink/[0.06] prose-code:px-1 prose-code:py-0.5 prose-code:rounded dark:prose-code:bg-zinc-800"
+                  dangerouslySetInnerHTML={{ __html: renderedMarkdown }}
+                />
               )}
             </div>
           </div>

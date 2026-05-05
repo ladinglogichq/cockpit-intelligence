@@ -31,6 +31,8 @@ export const COMPOSER_MODE_LABELS: Record<ComposerMode, string> = {
 type WorkspaceComposerContextValue = {
   query: string;
   setQuery: Dispatch<SetStateAction<string>>;
+  jurisdiction: string;
+  setJurisdiction: Dispatch<SetStateAction<string>>;
   composerMode: ComposerMode;
   setComposerMode: Dispatch<SetStateAction<ComposerMode>>;
   responseLength: ResponseLength;
@@ -42,7 +44,7 @@ type WorkspaceComposerContextValue = {
   removeAttachment: (id: string) => void;
   clearAttachments: () => void;
   investigateState: InvestigateState;
-  submitInvestigation: () => void;
+  submitInvestigation: (onPersisted?: () => void) => void;
   resetInvestigation: () => void;
 };
 
@@ -58,6 +60,7 @@ function makeAttachmentId() {
 
 export function WorkspaceComposerProvider({ children }: { children: ReactNode }) {
   const [query, setQuery] = useState("");
+  const [jurisdiction, setJurisdiction] = useState("");
   const [composerMode, setComposerMode] = useState<ComposerMode>("investigation");
   const [responseLength, setResponseLength] = useState<ResponseLength>("balanced");
   const [citationsMode, setCitationsMode] = useState<CitationsMode>("when_relevant");
@@ -79,15 +82,17 @@ export function WorkspaceComposerProvider({ children }: { children: ReactNode })
 
   const clearAttachments = useCallback(() => setAttachments([]), []);
 
-  const submitInvestigation = useCallback(() => {
+  const submitInvestigation = useCallback((onPersisted?: () => void) => {
     if (!query.trim()) return;
-    investigate(query.trim(), composerMode);
-  }, [query, composerMode, investigate]);
+    investigate(query.trim(), composerMode, jurisdiction || undefined, onPersisted);
+  }, [query, composerMode, jurisdiction, investigate]);
 
   const value = useMemo(
     () => ({
       query,
       setQuery,
+      jurisdiction,
+      setJurisdiction,
       composerMode,
       setComposerMode,
       responseLength,
@@ -105,6 +110,8 @@ export function WorkspaceComposerProvider({ children }: { children: ReactNode })
     [
       query,
       setQuery,
+      jurisdiction,
+      setJurisdiction,
       composerMode,
       setComposerMode,
       responseLength,

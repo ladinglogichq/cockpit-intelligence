@@ -10,7 +10,72 @@ export const CONTEXT_REGISTRY = {
   "domain.rbac-audit": "context/domain/rbac-audit.md",
   "template.task-packet": "context/templates/task-packet.md",
   "template.agent-coder": "context/templates/agent-coder-task.md",
+  // UNESCAP trade intelligence sources
+  "domain.unescap.cpta": "context/domain/unescap/cpta.md",
+  "domain.unescap.digital-trade-review-2025": "context/domain/unescap/digital-trade-regulatory-review-2025.md",
+  "domain.unescap.aptir-2025": "context/domain/unescap/aptir-2025.md",
+  "domain.unescap.ai-trade-facilitation": "context/domain/unescap/ai-trade-facilitation.md",
+  "domain.unescap.dtri-trade-integration": "context/domain/unescap/dtri-trade-integration.md",
+  "domain.unescap.generative-ai-trade": "context/domain/unescap/generative-ai-trade-facilitation.md",
+  "domain.unescap.rcdtra": "context/domain/unescap/rcdtra.md",
+  // RDTII country scores (converted from xlsx)
+  "domain.rdtii-scores.arm": "context/domain/rdtii-scores/arm.md",
+  "domain.rdtii-scores.aus": "context/domain/rdtii-scores/aus.md",
+  "domain.rdtii-scores.aze": "context/domain/rdtii-scores/aze.md",
+  "domain.rdtii-scores.bgd": "context/domain/rdtii-scores/bgd.md",
+  "domain.rdtii-scores.brn": "context/domain/rdtii-scores/brn.md",
+  "domain.rdtii-scores.btn": "context/domain/rdtii-scores/btn.md",
+  "domain.rdtii-scores.chn": "context/domain/rdtii-scores/chn.md",
+  "domain.rdtii-scores.geo": "context/domain/rdtii-scores/geo.md",
+  "domain.rdtii-scores.hkg": "context/domain/rdtii-scores/hkg.md",
+  "domain.rdtii-scores.ind": "context/domain/rdtii-scores/ind.md",
+  "domain.rdtii-scores.jpn": "context/domain/rdtii-scores/jpn.md",
+  "domain.rdtii-scores.kaz": "context/domain/rdtii-scores/kaz.md",
+  "domain.rdtii-scores.kgz": "context/domain/rdtii-scores/kgz.md",
+  "domain.rdtii-scores.khm": "context/domain/rdtii-scores/khm.md",
+  "domain.rdtii-scores.kor": "context/domain/rdtii-scores/kor.md",
+  "domain.rdtii-scores.lao": "context/domain/rdtii-scores/lao.md",
+  "domain.rdtii-scores.mmr": "context/domain/rdtii-scores/mmr.md",
+  "domain.rdtii-scores.mng": "context/domain/rdtii-scores/mng.md",
+  "domain.rdtii-scores.mys": "context/domain/rdtii-scores/mys.md",
+  "domain.rdtii-scores.npl": "context/domain/rdtii-scores/npl.md",
+  "domain.rdtii-scores.nzl": "context/domain/rdtii-scores/nzl.md",
+  "domain.rdtii-scores.pak": "context/domain/rdtii-scores/pak.md",
+  "domain.rdtii-scores.phl": "context/domain/rdtii-scores/phl.md",
+  "domain.rdtii-scores.png": "context/domain/rdtii-scores/png.md",
+  "domain.rdtii-scores.rus": "context/domain/rdtii-scores/rus.md",
+  "domain.rdtii-scores.sgp": "context/domain/rdtii-scores/sgp.md",
+  "domain.rdtii-scores.tha": "context/domain/rdtii-scores/tha.md",
+  "domain.rdtii-scores.tkm": "context/domain/rdtii-scores/tkm.md",
+  "domain.rdtii-scores.tur": "context/domain/rdtii-scores/tur.md",
+  "domain.rdtii-scores.vnm": "context/domain/rdtii-scores/vnm.md",
+  "domain.rdtii-scores.vut": "context/domain/rdtii-scores/vut.md",
 } as const;
+
+const UNESCAP_CONTEXT_KEYS = [
+  "domain.unescap.cpta",
+  "domain.unescap.digital-trade-review-2025",
+  "domain.unescap.aptir-2025",
+  "domain.unescap.ai-trade-facilitation",
+  "domain.unescap.dtri-trade-integration",
+  "domain.unescap.generative-ai-trade",
+  "domain.unescap.rcdtra",
+] as const;
+
+// All 31 country RDTII score keys — load selectively by jurisdiction in task packets
+export const RDTII_SCORE_KEYS = [
+  "domain.rdtii-scores.arm", "domain.rdtii-scores.aus", "domain.rdtii-scores.aze",
+  "domain.rdtii-scores.bgd", "domain.rdtii-scores.brn", "domain.rdtii-scores.btn",
+  "domain.rdtii-scores.chn", "domain.rdtii-scores.geo", "domain.rdtii-scores.hkg",
+  "domain.rdtii-scores.ind", "domain.rdtii-scores.jpn", "domain.rdtii-scores.kaz",
+  "domain.rdtii-scores.kgz", "domain.rdtii-scores.khm", "domain.rdtii-scores.kor",
+  "domain.rdtii-scores.lao", "domain.rdtii-scores.mmr", "domain.rdtii-scores.mng",
+  "domain.rdtii-scores.mys", "domain.rdtii-scores.npl", "domain.rdtii-scores.nzl",
+  "domain.rdtii-scores.pak", "domain.rdtii-scores.phl", "domain.rdtii-scores.png",
+  "domain.rdtii-scores.rus", "domain.rdtii-scores.sgp", "domain.rdtii-scores.tha",
+  "domain.rdtii-scores.tkm", "domain.rdtii-scores.tur", "domain.rdtii-scores.vnm",
+  "domain.rdtii-scores.vut",
+] as const;
 
 export const TASK_TYPE_DEFAULT_CONTEXT: Record<string, readonly string[]> = {
   discovery: [
@@ -18,6 +83,7 @@ export const TASK_TYPE_DEFAULT_CONTEXT: Record<string, readonly string[]> = {
     "architecture.monorepo",
     "domain.entities",
     "domain.integrations",
+    ...UNESCAP_CONTEXT_KEYS,
   ],
   extraction: [
     "rules.global",
@@ -30,18 +96,22 @@ export const TASK_TYPE_DEFAULT_CONTEXT: Record<string, readonly string[]> = {
     "domain.entities",
     "domain.rdtii-pillars",
     "domain.evidence-pipeline",
+    ...UNESCAP_CONTEXT_KEYS,
+    ...RDTII_SCORE_KEYS,
   ],
   verification: [
     "rules.global",
     "domain.entities",
     "domain.rdtii-pillars",
     "domain.rbac-audit",
+    ...RDTII_SCORE_KEYS,
   ],
   reporting: [
     "rules.global",
     "domain.entities",
     "domain.rdtii-pillars",
     "domain.rbac-audit",
+    ...RDTII_SCORE_KEYS,
   ],
   schema: [
     "rules.global",

@@ -12,6 +12,8 @@ import {
 } from "./tools/realTools.js";
 import { pasalSearch, pasalFetch } from "./tools/pasalTools.js";
 import { digitalPolicySearch } from "./tools/digitalPolicyTools.js";
+import { unescapFetch, rdtiiScoresFetch } from "./tools/unescapTools.js";
+import { reportFormatter } from "./tools/reportTools.js";
 
 export const DEFAULT_MODEL = "glm-5.1" as const;
 
@@ -51,7 +53,7 @@ Use the "task" tool to delegate work.
 
 ${PLANNER_SYSTEM_PROMPT}
 `,
-    tools: [workspaceHealth, webSearch, documentFetch, pasalSearch, pasalFetch, digitalPolicySearch],
+    tools: [workspaceHealth, webSearch, documentFetch, pasalSearch, pasalFetch, digitalPolicySearch, unescapFetch, rdtiiScoresFetch],
     subagents: [
       {
         name: "discovery",
@@ -74,8 +76,9 @@ Rules:
 - Search in the jurisdiction's official language(s) when relevant.
 - For Indonesia (ID): use pasal_search first, then pasal_fetch to retrieve full article text.
 - For Pillar 6 or Pillar 7 queries on any jurisdiction: use digital_policy_search to find recent regulatory interventions and enforcement actions as supplementary context.
+- For Asia-Pacific trade facilitation, RDTII framework context, AI in trade, or RCDTRA/CPTA program details: use unescap_fetch to retrieve authoritative UNESCAP/UNECA source material.
 `,
-        tools: [webSearch, documentFetch, pasalSearch, pasalFetch, digitalPolicySearch],
+        tools: [webSearch, documentFetch, pasalSearch, pasalFetch, digitalPolicySearch, unescapFetch, rdtiiScoresFetch],
       },
       {
         name: "parser",
@@ -120,8 +123,9 @@ Rules:
 - Clauses with confidence < 0.7 must be flagged as "needs_human_review".
 - Always include the verbatim original excerpt — never paraphrase.
 - Provide a 1–3 sentence rationale for every mapping.
+- For UNESCAP trade facilitation frameworks (CPTA, RCDTRA, APTIR, AI trade facilitation): use unescap_fetch to retrieve authoritative program context before mapping clauses.
 `,
-        tools: [clauseExtractor, pillarMapper],
+        tools: [clauseExtractor, pillarMapper, unescapFetch, rdtiiScoresFetch],
       },
       {
         name: "verifier",
@@ -144,7 +148,7 @@ Rules:
 - Ambiguous clauses get status "disputed" with explanation, not "rejected".
 - Every verification action must produce an audit trace entry.
 `,
-        tools: [citationVerifier],
+        tools: [citationVerifier, rdtiiScoresFetch],
       },
       {
         name: "report_agent",
@@ -164,7 +168,7 @@ Rules:
 - Flag any evidence gaps (jurisdictions without coverage, pillars without clauses).
 - Reports must be exportable as structured data (JSON) and human-readable format.
 `,
-        tools: [],
+        tools: [reportFormatter, rdtiiScoresFetch],
       },
     ],
   });

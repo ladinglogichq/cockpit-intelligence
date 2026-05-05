@@ -176,46 +176,59 @@ export const documentFetch = tool(
 // ============================================================================
 
 export const ocrExtract = tool(
-  async ({ documentId, pages }: { documentId: string; pages?: string }) => {
-    const pageScope = pages ?? "all";
+  async ({ url, documentId, pages }: { url?: string; documentId?: string; pages?: string }) => {
+    const source = url ?? documentId ?? "";
+    if (!source) return JSON.stringify({ error: "url or documentId is required" });
 
     try {
-      // For now, we'll simulate OCR by returning a structured error
-      // since we don't have actual image storage set up
-      return JSON.stringify({
-        documentId,
-        pages: pageScope,
-        status: "requires_image_storage",
-        message:
-          "OCR extraction requires image storage. Configure image storage (Vercel Blob, S3, etc.) to enable OCR functionality.",
-        extractedAt: new Date().toISOString(),
+      // Fetch the document bytes if a URL is provided
+      let imageData: Buffer | string = source;
+      if (source.startsWith("http")) {
+        const res = await fetch(source, {
+          headers: { "User-Agent": "Mozilla/5.0 (compatible; CockpitOCR/1.0)" },
+          signal: AbortSignal.timeout(30_000),
+        });
+        if (!res.ok) throw new Error(`Fetch failed: ${res.status} ${res.statusText}`);
+        imageData = Buffer.from(await res.arrayBuffer());
+      }
+
+      // Dynamically import tesseract.js (ESM-compatible)
+      const { recognize } = await import("tesseract.js");
+
+      const result = await recognize(imageData, "eng+ind+tha+vie+chi_sim+jpn+kor+rus", {
+        logger: () => {}, // suppress progress logs
       });
 
-      // Real implementation would be:
-      // const worker = await createWorker('node_modules/tesseract.js/src/worker-script.js', {
-      //   logger: (m) => console.log(m),
-      // });
-      //
-      // const { data: { text } } = await worker.recognize(imagePath);
-      // return JSON.stringify({ documentId, text, confidence, extractedAt });
+      const text = result.data.text;
+      const confidence = result.data.confidence;
+
+      return JSON.stringify({
+        documentId: documentId ?? source,
+        url: source,
+        pages: pages ?? "all",
+        text: text.slice(0, 50_000),
+        confidence: Math.round(confidence) / 100,
+        language: "multi",
+        extractedAt: new Date().toISOString(),
+        charCount: text.length,
+      });
     } catch (error) {
-      if (error instanceof Error) {
-        return JSON.stringify({
-          error: `OCR extraction failed: ${error.message}`,
-          documentId,
-          pages: pageScope,
-        });
-      }
-      return JSON.stringify({ error: "Unknown error in OCR extraction", documentId, pages: pageScope });
+      return JSON.stringify({
+        error: `OCR extraction failed: ${error instanceof Error ? error.message : String(error)}`,
+        documentId: documentId ?? source,
+        url: source,
+        pages: pages ?? "all",
+      });
     }
   },
   {
     name: "ocr_extract",
     description:
-      "Apply OCR to a scanned or image-based legal document. Extracts text while preserving structure. Requires image storage to be configured.",
+      "Apply OCR to a scanned or image-based legal document. Accepts a URL (fetches the document) or a documentId. Supports multilingual OCR: English, Bahasa Indonesia, Thai, Vietnamese, Chinese (Simplified), Japanese, Korean, Russian. Returns extracted text with confidence score.",
     schema: z.object({
-      documentId: z.string().min(1).describe("ID of the document in storage to OCR."),
-      pages: z.string().optional().describe("Page range to OCR (e.g. '1-5', '3,7,12'). Defaults to all pages."),
+      url: z.string().url().optional().describe("URL of the image or scanned PDF to OCR."),
+      documentId: z.string().optional().describe("Document ID (used as fallback identifier if URL not provided)."),
+      pages: z.string().optional().describe("Page range hint (e.g. '1-5'). Informational only — Tesseract processes the full document."),
     }),
   }
 );
@@ -258,7 +271,22 @@ Return a JSON array of extracted clauses with this structure:
 - Classify clauseType appropriately
 - Set confidence based on clarity and relevance (0.5 to 1.0)
 - Skip administrative or procedural clauses (definitions of terms, citation formats, etc.) unless they define rights or obligations
-- Return ONLY valid JSON, no other text or explanation`;
+- Return ONLY valid JSON, no other text or explanation
+
+**Multilingual Support — ASEAN & Pacific:**
+The text may be in any of the following languages. Extract clauses in the original language verbatim; do NOT translate excerpts.
+- Bahasa Indonesia / Bahasa Melayu: clause boundaries are "Pasal" (Article), "ayat" (paragraph), "huruf" (sub-clause), "Bagian" (Part), "BAB" (Chapter). Key terms: "data pribadi" (personal data), "pemrosesan" (processing), "pengalihan" (transfer), "persetujuan" (consent), "perlindungan" (protection).
+- Thai (ภาษาไทย): look for มาตรา (Section/Article), วรรค (paragraph). Key terms: ข้อมูลส่วนบุคคล (personal data), การโอน (transfer), ความยินยอม (consent), การประมวลผล (processing).
+- Vietnamese (Tiếng Việt): look for Điều (Article), Khoản (Clause), Điểm (Point). Key terms: dữ liệu cá nhân (personal data), chuyển dữ liệu (data transfer), đồng ý (consent), xử lý (processing).
+- Filipino/Tagalog: look for Seksyon (Section), Artikulo (Article). Key terms: personal na impormasyon (personal information), paglipat (transfer), pahintulot (consent).
+- Khmer (ភាសាខ្មែរ): look for មាត្រា (Article). Key terms: ទិន្នន័យផ្ទាល់ខ្លួន (personal data).
+- Lao (ພາສາລາວ): look for ມາດຕາ (Article). Key terms: ຂໍ້ມູນສ່ວນຕົວ (personal data).
+- Myanmar/Burmese: look for ပုဒ်မ (Section/Article). Key terms: ကိုယ်ရေးကိုယ်တာ အချက်အလက် (personal data).
+- Chinese (中文 — used in PRC, HK, TW): look for 第...条 (Article), 款 (paragraph), 项 (item). Key terms: 个人信息/個人資料 (personal data), 跨境传输 (cross-border transfer), 同意 (consent).
+- Japanese (日本語): look for 第...条 (Article), 項 (paragraph). Key terms: 個人情報 (personal data), 越境移転 (cross-border transfer), 同意 (consent).
+- Korean (한국어): look for 제...조 (Article), 항 (paragraph). Key terms: 개인정보 (personal data), 국외이전 (cross-border transfer), 동의 (consent).
+- Russian (Русский — used in Central Asia): look for Статья (Article), часть (part). Key terms: персональные данные (personal data), трансграничная передача (cross-border transfer).
+- For any unrecognized language: use structural patterns (numbered sections, indentation, repeated legal formulae) to identify clause boundaries.`;
 
       const prompt = `Extract relevant legal clauses from the following text for RDTII pillar mapping.
 
