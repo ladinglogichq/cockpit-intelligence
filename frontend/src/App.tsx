@@ -4,6 +4,7 @@ import { RequireAuth } from "./components/RequireAuth";
 
 /** Marketing site */
 const BlogPage = lazy(async () => ({ default: (await import("./pages/BlogPage")).BlogPage }));
+const DevelopersPage = lazy(async () => ({ default: (await import("./pages/DevelopersPage")).DevelopersPage }));
 const ExploreDataPage = lazy(async () => ({ default: (await import("./pages/ExploreDataPage")).ExploreDataPage }));
 const LandingPage = lazy(async () => ({ default: (await import("./pages/LandingPage")).LandingPage }));
 const LoginPage = lazy(async () => ({ default: (await import("./pages/LoginPage")).LoginPage }));
@@ -45,6 +46,7 @@ export function App() {
       <Route path="/" element={withSuspense(<LandingPage />, "Loading…")} />
       <Route path="/login" element={withSuspense(<LoginPage />, "Loading…")} />
       <Route path="/blog" element={withSuspense(<BlogPage />, "Loading blog…")} />
+      <Route path="/developers" element={withSuspense(<DevelopersPage />, "Loading developers…")} />
       <Route path="/explore-data" element={withSuspense(<ExploreDataPage />, "Loading dataset explorer…")} />
       <Route path="/methodology/risk-exposure" element={withSuspense(<RiskExposureMethodologyPage />, "Loading methodology…")} />
       <Route path="/platform" element={withSuspense(<PlatformPage />, "Loading platform…")} />

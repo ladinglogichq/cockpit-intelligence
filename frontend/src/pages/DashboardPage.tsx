@@ -5,10 +5,10 @@ import { useDashboardData } from "../hooks/useDashboardData";
 import { DashboardOverview } from "../components/DashboardOverview";
 
 const SUGGESTIONS = [
-  "Summarize data protection clauses for Kenya DPA",
-  "Which jurisdictions have cross-border transfer restrictions?",
-  "What evidence records need human review?",
-  "Compare Pillar 7 coverage across Singapore and Nigeria",
+  "What rules apply when sharing customer data across ASEAN countries?",
+  "How can I send data to partners in different countries legally?",
+  "What do I need to know about privacy when collecting customer info?",
+  "How do I show my business follows the rules for audits?",
 ] as const;
 
 export function DashboardPage() {
@@ -48,10 +48,10 @@ export function DashboardPage() {
           id={headingId}
           className="font-display text-2xl font-medium leading-snug tracking-tight text-ink dark:text-zinc-100 sm:text-[1.75rem]"
         >
-          What do you want to investigate?
+          What trade rules do you need to check?
         </h1>
         <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-ink-muted dark:text-zinc-400">
-          Natural-language entry for jurisdiction scans, clause analysis, and evidence records.
+          Search in plain English—no technical knowledge needed. We'll find the rules that matter for your business.
         </p>
       </div>
 
@@ -74,7 +74,7 @@ export function DashboardPage() {
           <div className="rounded-2xl border border-ink/10 bg-canvas dark:border-zinc-800 dark:bg-zinc-900">
             <div className="flex items-center justify-between border-b border-ink/10 px-4 py-3 dark:border-zinc-800">
               <p className="text-xs font-semibold uppercase tracking-wider text-ink-muted dark:text-zinc-500">
-                Investigation result
+                Your answer
               </p>
               <div className="flex items-center gap-3">
                 {investigateState.status === "done" && investigateState.persisted ? (
@@ -93,7 +93,7 @@ export function DashboardPage() {
             </div>
             <div className="px-4 py-4 text-sm leading-relaxed text-ink dark:text-zinc-200">
               {investigateState.status === "loading" && (
-                <p className="text-ink-muted dark:text-zinc-500">Running investigation…</p>
+                <p className="text-ink-muted dark:text-zinc-500">Looking this up…</p>
               )}
               {investigateState.status === "error" && (
                 <p className="text-red-600 dark:text-red-400" role="alert">
@@ -114,7 +114,7 @@ export function DashboardPage() {
       {/* Dashboard data */}
       <div className="mt-10 w-full max-w-screen-md">
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="font-display text-lg font-medium text-ink dark:text-zinc-100">Workspace data</h2>
+          <h2 className="font-display text-lg font-medium text-ink dark:text-zinc-100">Your findings</h2>
           <button
             type="button"
             onClick={handleClearWorkspace}

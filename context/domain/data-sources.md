@@ -18,6 +18,8 @@ Canonical ground-truth sources for framework alignment. Load before any pillar m
 | ESCAP Asia-Pacific Review | [dtri.uneca.org](https://dtri.uneca.org/assets/data/publications/ESCAP-2025-RP-Digital-trade-regulatory-review-AP-en.pdf) | Pre-mapped reports for Asia-Pacific; use as few-shot examples |
 | DTI Database | [cambridge.org](https://www.cambridge.org/core/journals/world-trade-review/article/global-trends-in-digital-trade-policies-and-practices-evidence-from-the-digital-trade-integration-database/F89A800B8C3E2F75E0F9F76C6BC32728) | 146 jurisdictions, 65 regulatory dimensions; strong overlap with RDTII indicators |
 | UNCTAD Data Hub | [unctadstat.unctad.org](https://unctadstat.unctad.org) | Trade policy qualitative data, e-commerce legislation tracker, regulatory indicators |
+| UNESCAP Library Databases | [unescap.org/library/databases](https://www.unescap.org/library/databases) | Online (open access) | Central repository of UN, ADB, World Bank, WTO, UNCTAD, IMF, OECD databases covering trade, development, and economic indicators |
+| UNESCAP Data Explorer | [dataexplorer.unescap.org](https://dataexplorer.unescap.org/) | Online (open access) | Interactive tool for exploring UNESCAP data and visualizations |
 
 ---
 

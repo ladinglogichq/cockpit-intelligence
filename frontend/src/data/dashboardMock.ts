@@ -1,6 +1,6 @@
 import snapshot from "./dashboard-snapshot.json";
 
-export type PillarLabel = "pillar_6" | "pillar_7";
+export type PillarLabel = "pillar_6" | "pillar_7" | "pillar_8" | "pillar_9";
 
 export type EvidenceStatus = "verified" | "needs_review" | "draft" | "retracted";
 

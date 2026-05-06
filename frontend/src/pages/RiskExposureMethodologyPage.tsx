@@ -77,6 +77,34 @@ const COMPLIANCE_TAG_ROWS: readonly { tag: string; summary: string }[] = [
     tag: "Data minimization",
     summary: "Principles requiring that only data adequate, relevant, and limited to what is necessary for the intended purpose be collected.",
   },
+  {
+    tag: "Safe harbor provisions",
+    summary: "Legal protections for intermediaries limiting liability for user-generated content when certain conditions are met.",
+  },
+  {
+    tag: "Notice and takedown obligations",
+    summary: "Requirements for platforms to respond to content removal requests from rights holders or authorities.",
+  },
+  {
+    tag: "Intermediary liability",
+    summary: "Rules determining when online intermediaries are liable for user-generated content or activities on their platforms.",
+  },
+  {
+    tag: "Content blocking requirements",
+    summary: "Mandates requiring platforms or ISPs to block access to specific online content or services.",
+  },
+  {
+    tag: "Licensing restrictions",
+    summary: "Requirements for digital content providers to obtain licenses, permits, or authorizations to operate.",
+  },
+  {
+    tag: "Geoblocking and localization",
+    summary: "Restrictions on access to digital content based on geographic location or requirements for local presence.",
+  },
+  {
+    tag: "Local content quotas",
+    summary: "Mandates requiring a percentage of content to be produced or sourced domestically.",
+  },
 ];
 
 export function RiskExposureMethodologyPage() {

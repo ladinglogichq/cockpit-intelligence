@@ -1,18 +1,18 @@
 import { Link } from "react-router-dom";
 
 type ProductLink = { label: string; href: string } | { label: string; to: string };
+type DeveloperLink = { label: string; to: string };
 
 const product: ProductLink[] = [
-  { label: "Overview", href: "#product" },
+  { label: "Platform", to: "/platform" },
   { label: "Pricing", to: "/pricing" },
-  { label: "Use cases", href: "#use-cases" },
 ];
 
-const developers = [
-  { label: "Docs", href: "#docs" },
-  { label: "Explore data", href: "/explore-data" },
-  { label: "API status", href: "#docs" },
-  { label: "Changelog", href: "#docs" },
+const developers: DeveloperLink[] = [
+  { label: "Developers", to: "/developers" },
+  { label: "Blog", to: "/blog" },
+  { label: "Explore data", to: "/explore-data" },
+  { label: "Methodology", to: "/methodology/risk-exposure" },
 ];
 
 export function SiteFooter() {
@@ -30,7 +30,24 @@ export function SiteFooter() {
               A regulation intelligence platform for discovering, mapping, and verifying data protection obligations with evidence you can defend.
             </p>
             <p className="mt-3 text-xs font-medium tracking-wide text-ink-faint">
-              By Daemon Blockint Technologies
+              A partnership between{" "}
+              <a
+                href="https://daemonprotocol.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline decoration-ink/20 hover:decoration-ink/40"
+              >
+                Daemon Blockint Technologies
+              </a>{" "}
+              and{" "}
+              <a
+                href="https://ladinglogic.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline decoration-ink/20 hover:decoration-ink/40"
+              >
+                Lading Logic
+              </a>
             </p>
           </div>
           <div>
@@ -58,15 +75,9 @@ export function SiteFooter() {
             <ul className="mt-4 space-y-3">
               {developers.map((l) => (
                 <li key={l.label}>
-                  {l.href.startsWith("/") ? (
-                    <Link to={l.href} className="text-sm text-ink hover:text-ink-muted">
-                      {l.label}
-                    </Link>
-                  ) : (
-                    <a href={l.href} className="text-sm text-ink hover:text-ink-muted">
-                      {l.label}
-                    </a>
-                  )}
+                  <Link to={l.to} className="text-sm text-ink hover:text-ink-muted">
+                    {l.label}
+                  </Link>
                 </li>
               ))}
             </ul>

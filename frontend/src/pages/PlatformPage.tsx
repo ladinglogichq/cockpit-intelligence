@@ -27,7 +27,7 @@ const PILLARS = [
   },
   {
     title: "Extract & Map",
-    body: "Parse legal documents down to clause level, map each clause to RDTII Pillar 6 or 7 sub-indicators, and score confidence so analysts know what needs review.",
+    body: "Parse legal documents down to clause level, map each clause to RDTII Pillar 6, 7, 8, or 9 sub-indicators, and score confidence so analysts know what needs review.",
   },
   {
     title: "Verify & Report",

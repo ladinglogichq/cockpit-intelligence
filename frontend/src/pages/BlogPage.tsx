@@ -5,7 +5,8 @@ import { SiteHeader } from "../components/SiteHeader";
 
 /**
  * Methodology note: how agents extract and map legal text from regulation documents
- * to RDTII Pillar 6 (cross-border data policies) and Pillar 7 (domestic data protection).
+ * to RDTII Pillar 6 (cross-border data policies), Pillar 7 (domestic data protection),
+ * Pillar 8 (internet intermediary liability), and Pillar 9 (accessing commercial content).
  */
 
 export function BlogPage() {
@@ -69,10 +70,11 @@ export function BlogPage() {
               Stage 3 — Extract & map
             </h2>
             <p className="mt-4 text-base leading-relaxed text-ink-muted">
-              The legal mapper agent scores each clause against RDTII Pillar 6 (cross-border data transfer) and Pillar 7
-              (domestic data protection) sub-indicators. Confidence below 0.70 is automatically flagged{" "}
-              <code className="rounded bg-canvas-subtle px-1 text-sm">needs_human_review</code>. Clauses that span both
-              pillars produce two mapping records, both tagged <code className="rounded bg-canvas-subtle px-1 text-sm">cross_pillar</code>.
+              The legal mapper agent scores each clause against RDTII Pillar 6 (cross-border data transfer), Pillar 7
+              (domestic data protection), Pillar 8 (internet intermediary liability), and Pillar 9 (accessing commercial content)
+              sub-indicators. Confidence below 0.70 is automatically flagged{" "}
+              <code className="rounded bg-canvas-subtle px-1 text-sm">needs_human_review</code>. Clauses that span multiple
+              pillars produce separate mapping records, each tagged <code className="rounded bg-canvas-subtle px-1 text-sm">cross_pillar</code>.
             </p>
           </section>
 

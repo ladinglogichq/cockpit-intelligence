@@ -1,6 +1,6 @@
-# RDTII Pillar 6 & Pillar 7 — Definitions and mapping criteria
+# RDTII Pillars 6, 7, 8 & 9 — Definitions and mapping criteria
 
-Canonical definitions for the two RDTII pillars targeted by Cockpit's regulation intelligence pipeline. **Do not invent pillar labels or sub-indicators** outside this file; update here when the RDTII framework evolves.
+Canonical definitions for the four RDTII pillars targeted by Cockpit's regulation intelligence pipeline. **Do not invent pillar labels or sub-indicators** outside this file; update here when the RDTII framework evolves.
 
 **Source:** ESCAP/UNECA *Regional Digital Trade Integration Index (RDTII) v2.1 Guide* — [dtri.uneca.org](https://dtri.uneca.org/assets/data/publications/ESCAP-2025-MN-RDTII-2.1-guide-en.pdf).
 
@@ -81,6 +81,78 @@ A clause maps to Pillar 7 when it:
 - Sets out data handling obligations (collection limitation, purpose limitation, data minimization)
 - Defines penalties for non-compliance with data protection rules
 - Regulates government surveillance or law enforcement data access
+
+---
+
+## Pillar 8 — Internet Intermediary Liability
+
+Measures the regulatory environment governing **online intermediaries** including safe harbor regimes, monitoring obligations, and liability rules for platforms.
+
+### Scope
+
+Clauses that:
+- Establish **safe harbor provisions** protecting platforms from liability for user-generated content
+- Define **notice and takedown** obligations for infringing or illegal content
+- Impose **monitoring and reporting** requirements on intermediaries
+- Specify **intermediary liability exemptions** and limitations
+- Regulate **intermediary obligations** for copyright infringement, defamation, illegal content
+- Create **frameworks for intermediary cooperation** with law enforcement
+- Establish **platform accountability** standards for content moderation
+
+### Sub-indicators
+
+| ID | Sub-indicator | What to look for |
+| -- | ------------- | ---------------- |
+| 8.1 | Safe harbor provisions | Laws that limit intermediary liability for user-generated content when certain conditions are met |
+| 8.2 | Notice and takedown obligations | Requirements for platforms to respond to content removal requests from rights holders or authorities |
+| 8.3 | Monitoring and reporting duties | Obligations for intermediaries to monitor content or report illegal activities |
+| 8.4 | Liability exemptions and limitations | Specific carve-outs from intermediary liability (e.g., mere conduit, caching, hosting) |
+| 8.5 | Enforcement and penalties | Sanctions for intermediaries that fail to comply with intermediary obligations |
+
+### Mapping signals
+
+A clause maps to Pillar 8 when it:
+- Uses language like "intermediary," "platform," "service provider," "safe harbor," "notice and takedown," "liability exemption"
+- References conditions for platform immunity or protection from user content liability
+- Describes obligations to remove, block, or take down content
+- Establishes reporting requirements to authorities regarding illegal content
+- Defines platform responsibilities for content moderation
+
+---
+
+## Pillar 9 — Accessing Commercial Content
+
+Measures regulatory restrictions affecting **access to commercial digital content** including blocking, filtering, and licensing restrictions.
+
+### Scope
+
+Clauses that:
+- Impose **content blocking or filtering** requirements on digital services
+- Establish **licensing restrictions** on digital services or content providers
+- Create **geoblocking** or content localization mandates
+- Set **requirements for foreign content providers** operating in the jurisdiction
+- Regulate **content quotas** or local content requirements
+- Impose **domain or platform blocking** for commercial content
+- Establish **censorship or content control** mechanisms affecting commercial digital services
+
+### Sub-indicators
+
+| ID | Sub-indicator | What to look for |
+| -- | ------------- | ---------------- |
+| 9.1 | Content blocking requirements | Laws that mandate blocking access to specific online content or platforms |
+| 9.2 | Licensing restrictions | Requirements for digital content providers to obtain licenses or authorizations |
+| 9.3 | Geoblocking and localization | Mandates restricting access based on geographic location or requiring local presence |
+| 9.4 | Foreign provider requirements | Obligations specific to foreign digital service providers entering the market |
+| 9.5 | Content quotas and local requirements | Mandates for local content production or distribution percentages |
+
+### Mapping signals
+
+A clause maps to Pillar 9 when it:
+- Uses language like "blocking," "filtering," "geoblocking," "local content," "licensing," "foreign provider"
+- References restrictions on access to online platforms or content
+- Establishes licensing requirements for digital services
+- Imposes geographic restrictions on content availability
+- Sets quotas or requirements for domestic/local content
 
 ---
 

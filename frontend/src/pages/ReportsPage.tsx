@@ -13,8 +13,8 @@ export function ReportsPage() {
   return (
     <WorkspacePageBody
       title="Reports"
-      intro="Structured intelligence summaries for review and sign-off. Exports should align with case and alert context and respect audit and RBAC expectations."
-      panelCaption="Reserved for report templates, generation jobs, and export history."
+      intro="Intelligence summaries you can review and sign off. Exports stay in sync with your cases and alerts, and follow audit and access rules."
+      panelCaption="Space for report templates, generation jobs, and export history."
     />
   );
 }

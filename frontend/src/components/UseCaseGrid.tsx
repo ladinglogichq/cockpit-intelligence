@@ -31,7 +31,7 @@ const cases: CaseCard[] = [
   {
     n: "03",
     title: "Pillar mapping",
-    body: "Map clauses to RDTII Pillar 6 (Cross-Border Data Policies) and Pillar 7 (Domestic Data Protection & Privacy) with confidence scoring.",
+    body: "Map clauses to RDTII Pillar 6 (Cross-Border Data Policies), Pillar 7 (Domestic Data Protection & Privacy), Pillar 8 (Internet Intermediary Liability), and Pillar 9 (Accessing Commercial Content) with confidence scoring.",
     to: "/reports",
   },
   {

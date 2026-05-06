@@ -211,7 +211,7 @@ export function ApiKeysPage() {
           </div>
 
           <p className="text-xs text-ink-muted dark:text-zinc-500">
-            Preview data for layout only. Real keys, rotation, and usage metrics require a connected Cockpit API tenant.
+            Preview data for layout only. Real keys, rotation, and usage stats need a connected Cockpit API tenant.
           </p>
         </section>
       </div>

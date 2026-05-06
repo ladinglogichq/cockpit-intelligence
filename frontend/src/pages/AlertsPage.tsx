@@ -13,8 +13,8 @@ export function AlertsPage() {
   return (
     <WorkspacePageBody
       title="Alerts"
-      intro="Triage-ready findings linked to entities and evidence artifacts. Severity, confidence, and priority follow the Cockpit scoring rubric; status transitions stay within the alert lifecycle until promoted to a case."
-      panelCaption="Reserved for the alert list, filters, and detail drawer (linked entity ids, source artifact ids)."
+      intro="Findings ready for triage, linked to entities and evidence. Severity, confidence, and priority follow our scoring rubric. Status changes stay here until the alert gets promoted to a case."
+      panelCaption="Space for the alert list, filters, and details panel showing linked entities and sources."
     />
   );
 }

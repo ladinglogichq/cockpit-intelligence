@@ -20,6 +20,10 @@ function pillarClass(pillar: string) {
       return "bg-blue-500/15 text-blue-400 dark:bg-blue-500/20 dark:text-blue-300";
     case "pillar_7":
       return "bg-violet-500/15 text-violet-700 dark:bg-violet-500/20 dark:text-violet-300";
+    case "pillar_8":
+      return "bg-emerald-500/15 text-emerald-700 dark:bg-emerald-500/20 dark:text-emerald-300";
+    case "pillar_9":
+      return "bg-amber-500/15 text-amber-700 dark:bg-amber-500/20 dark:text-amber-300";
     default:
       return "bg-zinc-500/15 text-zinc-500 dark:bg-zinc-500/20 dark:text-zinc-400";
   }
@@ -29,6 +33,8 @@ function pillarLabel(pillar: string) {
   switch (pillar) {
     case "pillar_6": return "Pillar 6";
     case "pillar_7": return "Pillar 7";
+    case "pillar_8": return "Pillar 8";
+    case "pillar_9": return "Pillar 9";
     default: return pillar;
   }
 }
@@ -54,14 +60,14 @@ export function DashboardOverview({ data }: Props) {
   return (
     <div className="flex flex-col gap-8 pt-6">
       <p className="text-center text-xs text-ink-muted dark:text-zinc-500 sm:text-left">
-        Workspace snapshot · {formatShort(data.generatedAt)}
+        Updated · {formatShort(data.generatedAt)}
       </p>
 
       <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4" aria-label="Key metrics">
         {[
-          { label: "Jurisdictions", value: data.kpis.jurisdictionsAnalyzed },
-          { label: "Clauses extracted", value: data.kpis.clausesExtracted },
-          { label: "Mappings verified", value: data.kpis.mappingsVerified },
+          { label: "Countries checked", value: data.kpis.jurisdictionsAnalyzed },
+          { label: "Rules found", value: data.kpis.clausesExtracted },
+          { label: "Verified", value: data.kpis.mappingsVerified },
           { label: "Reports ready", value: data.kpis.reportsReady },
         ].map(({ label, value }) => (
           <li key={label} className="rounded-xl border border-ink/10 bg-ink/[0.02] p-4 dark:border-zinc-800 dark:bg-zinc-900/60">
@@ -74,7 +80,7 @@ export function DashboardOverview({ data }: Props) {
       {data.evidence.length > 0 && (
         <section aria-labelledby="dash-evidence-heading">
           <h2 id="dash-evidence-heading" className="font-display text-lg font-medium text-ink dark:text-zinc-100">
-            Recent evidence
+            Rules that apply
           </h2>
           <ul className="mt-4 divide-y divide-ink/10 rounded-xl border border-ink/10 bg-ink/[0.02] dark:divide-zinc-800 dark:border-zinc-800 dark:bg-zinc-900/60">
             {data.evidence.map((e) => (
@@ -96,7 +102,7 @@ export function DashboardOverview({ data }: Props) {
                 {e.excerpt}
               </blockquote>
               <time className="mt-1 text-xs text-ink-faint dark:text-zinc-600" dateTime={e.extractedAt}>
-                Extracted {formatShort(e.extractedAt)}
+                Found {formatShort(e.extractedAt)}
               </time>
             </li>
             ))}
@@ -107,7 +113,7 @@ export function DashboardOverview({ data }: Props) {
       {data.mappingActivity.length > 0 && (
         <section aria-labelledby="dash-activity-heading">
         <h2 id="dash-activity-heading" className="font-display text-lg font-medium text-ink dark:text-zinc-100">
-          Mapping activity
+          Recent updates
         </h2>
         <ul className="mt-4 space-y-3">
           {data.mappingActivity.map((m, i) => (

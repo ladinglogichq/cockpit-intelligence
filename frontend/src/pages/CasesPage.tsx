@@ -13,8 +13,8 @@ export function CasesPage() {
   return (
     <WorkspacePageBody
       title="Cases"
-      intro="Operational investigations: each case aggregates alerts and entities under allowed status transitions (new through triaged, investigating, escalated, contained, resolved, closed, false positive, duplicate)."
-      panelCaption="Reserved for case table, assignment, SLA, and linked alerts / entities."
+      intro="Active investigations. Each case pulls together alerts and entities, and you can move them through statuses like triaged, investigating, escalated, contained, resolved, closed, false positive, or duplicate."
+      panelCaption="Space for the case table, assignment, SLA info, and linked alerts and entities."
     />
   );
 }
