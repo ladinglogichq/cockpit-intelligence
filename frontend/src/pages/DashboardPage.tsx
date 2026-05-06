@@ -1,5 +1,6 @@
-import { useEffect, useId, useMemo, useState } from "react";
-import { marked } from "marked";
+import { useEffect, useId, useState } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { useWorkspaceComposer } from "../context/WorkspaceComposerContext";
 import { useDashboardData } from "../hooks/useDashboardData";
 import { DashboardOverview } from "../components/DashboardOverview";
@@ -29,11 +30,6 @@ export function DashboardPage() {
       refetch();
     }
   }, [investigateState, refetch]);
-
-  const renderedMarkdown = useMemo(() => {
-    if (investigateState.status !== "done") return "";
-    return marked.parse(investigateState.content, { async: false }) as string;
-  }, [investigateState]);
 
   async function handleClearWorkspace() {
     await clearWorkspace();
@@ -101,10 +97,12 @@ export function DashboardPage() {
                 </p>
               )}
               {investigateState.status === "done" && (
-                <div
+                <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
                   className="prose prose-sm max-w-none dark:prose-invert prose-table:text-xs prose-th:font-semibold prose-td:align-top prose-headings:font-display prose-headings:font-semibold prose-code:text-xs prose-code:bg-ink/[0.06] prose-code:px-1 prose-code:py-0.5 prose-code:rounded dark:prose-code:bg-zinc-800"
-                  dangerouslySetInnerHTML={{ __html: renderedMarkdown }}
-                />
+                >
+                  {investigateState.content}
+                </ReactMarkdown>
               )}
             </div>
           </div>

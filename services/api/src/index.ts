@@ -42,6 +42,12 @@ app.post("/v1/investigate", async (c) => {
 
   return stream(c, async (s) => {
     await s.write(`: ping\n\n`);
+
+    // Send keepalive comments every 15s so the browser doesn't drop the SSE connection
+    const keepalive = setInterval(async () => {
+      try { await s.write(`: keepalive\n\n`); } catch { /* stream closed */ }
+    }, 15_000);
+
     try {
       const content = await runAgentDirect(userMessage);
       await s.write(`data: ${JSON.stringify({ type: "chunk", content })}\n\n`);
@@ -60,6 +66,8 @@ app.post("/v1/investigate", async (c) => {
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);
       await s.write(`data: ${JSON.stringify({ type: "error", content: msg })}\n\n`);
+    } finally {
+      clearInterval(keepalive);
     }
   });
 });

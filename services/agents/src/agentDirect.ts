@@ -38,6 +38,7 @@ export async function runAgentDirect(userMessage: string): Promise<string> {
   const openai = new OpenAI({
     apiKey,
     baseURL: "https://api.z.ai/api/paas/v4/",
+    timeout: 120_000,
   });
 
   const model = process.env.ANTHROPIC_MODEL?.trim() ?? "glm-5.1";
