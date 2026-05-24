@@ -25,13 +25,25 @@ export function SupabaseAuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      setSession(data.session);
-      setLoading(false);
+    let getSessionDone = false;
+    let authChangeFired = false;
+
+    function tryFinishLoading() {
+      if (getSessionDone && authChangeFired) setLoading(false);
+    }
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, s) => {
+      setSession(s);
+      authChangeFired = true;
+      tryFinishLoading();
     });
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, s) => {
-      setSession(s);
+    supabase.auth.getSession().then(({ data }) => {
+      setSession(data.session);
+      getSessionDone = true;
+      tryFinishLoading();
     });
 
     return () => subscription.unsubscribe();
@@ -40,7 +52,10 @@ export function SupabaseAuthProvider({ children }: { children: ReactNode }) {
   const signInWithOtp = useCallback(async (email: string) => {
     const { error } = await supabase.auth.signInWithOtp({
       email,
-      options: { emailRedirectTo: `${window.location.origin}/dashboard` },
+      options: {
+        emailRedirectTo: `${window.location.origin}/dashboard`,
+        shouldCreateUser: true,
+      },
     });
     return { error: error?.message ?? null };
   }, []);
