@@ -44,3 +44,4 @@ sandbox-workspace/
 workspace/
 convo.md
 .agents/
+pnpm-lock.yaml
